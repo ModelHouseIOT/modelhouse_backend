@@ -6,10 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,8 +19,13 @@ public class Account extends AuditModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Email
+    @JoinColumn(name = "email_address")
     private String emailAddress;
+    @JoinColumn(name = "is_active")
     private Boolean isActive;
     private String role;
     private String password;
+    @OneToMany
+    private List<UserProfile> userProfiles;
 }

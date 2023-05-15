@@ -20,16 +20,13 @@ public class AuthServiceImpl implements AuthService {
     private PasswordEncoder encoder;
 
     public Account login(AuthCredentialsResource credentials) {
-        String email = credentials.getEmailAddress();
-        String password = credentials.getPassword();
-
-        Account account = userRepository.findByEmailAddress(email);
-        if (account == null) {
+        //String email = credentials.getEmailAddress();
+        //String password = credentials.getPassword();
+        Account account = userRepository.findByEmailAddress(credentials.getEmailAddress());
+        if (account == null)
             throw new IllegalArgumentException("User not found");
-        }
-        if (!account.getPassword().equals(password)) {
+        if (!encoder.matches(credentials.getPassword(), account.getPassword()))
             throw new IllegalArgumentException("Wrong password");
-        }
         return account;
     }
 
@@ -37,7 +34,7 @@ public class AuthServiceImpl implements AuthService {
     public Account register(AuthCredentialsResource credentialsResource) {
         Account registeredAccount = new Account();
         registeredAccount.setEmailAddress(credentialsResource.getEmailAddress());
-        registeredAccount.setPassword(encoder.encode(credentialsResource.getPassword()));
+            registeredAccount.setPassword(encoder.encode(credentialsResource.getPassword()));
         registeredAccount = userRepository.save(registeredAccount);
         return registeredAccount;
     }
