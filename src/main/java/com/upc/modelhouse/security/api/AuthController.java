@@ -1,5 +1,6 @@
 package com.upc.modelhouse.security.api;
 
+import com.upc.modelhouse.security.domain.model.entity.Account;
 import com.upc.modelhouse.security.domain.persistence.UserRepository;
 import com.upc.modelhouse.security.domain.service.AuthService;
 import com.upc.modelhouse.security.resource.AuthCredentialsResource;
@@ -36,12 +37,18 @@ public class AuthController {
 
     @PostMapping("/login")
     @Operation(summary = "Login", tags = {"Auth"})
-    public ResponseEntity<?> login(@Valid @RequestBody AuthCredentialsResource user) {
-        Authentication authentication = manager.authenticate(
-                new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtil.generateJwtToken(authentication);
-        return ResponseEntity.ok(new JwtResponse(jwt));
+    public ResponseEntity<?> login(@Valid @RequestBody AuthCredentialsResource account) {
+        ResponseErrorResource errorResource = new ResponseErrorResource();
+        errorResource.setMessage(statusBody);
+        Account response = authService.login(account);
+        //Authentication authentication = manager.authenticate(
+        //        new UsernamePasswordAuthenticationToken(account.getEmailAddress(), account.getPassword()));
+        //SecurityContextHolder.getContext().setAuthentication(authentication);
+        //String jwt = jwtUtil.generateJwtToken(authentication);
+        if(response == null) {
+            return ResponseEntity.badRequest().body(errorResource);
+        }
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/register")
@@ -51,7 +58,7 @@ public class AuthController {
         ResponseErrorResource errorResource = new ResponseErrorResource();
         errorResource.setMessage(statusBody);
 
-        if(userRepository.findByEmail(credentials.getEmail()) != null) {
+        if(userRepository.findByEmailAddress(credentials.getEmailAddress()) != null) {
             return ResponseEntity.badRequest().body(errorResource);
         }
 

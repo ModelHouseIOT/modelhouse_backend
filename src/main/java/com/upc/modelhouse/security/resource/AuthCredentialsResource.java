@@ -16,7 +16,7 @@ public class AuthCredentialsResource {
     @NotNull
     @NotBlank
     @Email
-    private String email;
+    private String emailAddress;
     @NotNull
     @NotBlank
     @Size(min = 8, max = 16)

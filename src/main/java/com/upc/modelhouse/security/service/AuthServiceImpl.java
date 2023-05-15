@@ -1,6 +1,6 @@
 package com.upc.modelhouse.security.service;
 
-import com.upc.modelhouse.security.domain.model.entity.User;
+import com.upc.modelhouse.security.domain.model.entity.Account;
 import com.upc.modelhouse.security.domain.persistence.UserRepository;
 import com.upc.modelhouse.security.domain.service.AuthService;
 import com.upc.modelhouse.security.resource.AuthCredentialsResource;
@@ -19,27 +19,26 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     private PasswordEncoder encoder;
 
-    public User login(AuthCredentialsResource credentials) {
-        String email = credentials.getEmail();
+    public Account login(AuthCredentialsResource credentials) {
+        String email = credentials.getEmailAddress();
         String password = credentials.getPassword();
 
-        User user = userRepository.findByEmail(email);
-        if (user == null) {
+        Account account = userRepository.findByEmailAddress(email);
+        if (account == null) {
             throw new IllegalArgumentException("User not found");
         }
-        if (!user.getPassword().equals(password)) {
+        if (!account.getPassword().equals(password)) {
             throw new IllegalArgumentException("Wrong password");
         }
-        return user;
+        return account;
     }
 
     @Override
-    public User register(AuthCredentialsResource credentialsResource) {
-        User registeredUser = new User();
-        registeredUser.setEmail(credentialsResource.getEmail());
-        registeredUser.setPassword(encoder.encode(credentialsResource.getPassword()));
-        registeredUser = userRepository.save(registeredUser);
-        return registeredUser;
+    public Account register(AuthCredentialsResource credentialsResource) {
+        Account registeredAccount = new Account();
+        registeredAccount.setEmailAddress(credentialsResource.getEmailAddress());
+        registeredAccount.setPassword(encoder.encode(credentialsResource.getPassword()));
+        registeredAccount = userRepository.save(registeredAccount);
+        return registeredAccount;
     }
-
 }
