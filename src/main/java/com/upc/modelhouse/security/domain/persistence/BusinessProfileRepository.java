@@ -7,7 +7,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface BusinessProfileRepository extends JpaRepository<BusinessProfile, Long> {
+    @Override
     List<BusinessProfile> findAll();
     BusinessProfile findBusinessProfileById(Long id);
-    //BusinessProfile findBusinessProfileByAccount_Id(Long id);
+    BusinessProfile findBusinessProfileByAccount_Id(Long id);
 }

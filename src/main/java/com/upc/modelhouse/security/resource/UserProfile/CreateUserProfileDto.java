@@ -26,7 +26,6 @@ public class CreateUserProfileDto {
     private String phoneNumber;
     private Date registrationDate;
     private Date lastLogin;
-    private Integer accountStatus;
     @NotNull
     private Long accountId;
 }

@@ -18,5 +18,4 @@ public class UpdateUserProfileDto {
     private String phoneNumber;
     private Date registrationDate;
     private Date lastLogin;
-    private Integer accountStatus;
 }

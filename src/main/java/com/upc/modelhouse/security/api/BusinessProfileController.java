@@ -27,22 +27,22 @@ public class BusinessProfileController {
         this.mapper = mapper;
     }
     @GetMapping()
-    //@PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
     public List<BusinessProfileDto> getAll(){
         return mapper.listToResource(businessProfileService.findAll());
     }
     @GetMapping("{accountId}")
-    //@PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
     public BusinessProfileDto getUserProfileByAccount(@PathVariable("accountId") Long id){
         return mapper.toResource(businessProfileService.findByAccountId(id));
     }
     @PostMapping
-    //@PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
     public BusinessProfileDto createFavorite(@RequestBody CreateBusinessProfileDto resource){
         return mapper.toResource(businessProfileService.create(mapper.toModel(resource)));
     }
     @PutMapping("{accountId}")
-    //@PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
     public BusinessProfileDto updateUserProfile(@PathVariable("accountId") Long id, @RequestBody UpdateBusinessProfileDto updateBusinessProfileDto){
         return mapper.toResource(businessProfileService.update(id, mapper.toModel(updateBusinessProfileDto)));
     }

@@ -24,9 +24,9 @@ public class Account extends AuditModel {
     private Boolean isActive;
     private String role;
     private String password;
-    @OneToOne(mappedBy = "user_profile", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
     private UserProfile userProfile;
 
-    @OneToOne(mappedBy = "business_profile", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
     private BusinessProfile businessProfile;
 }

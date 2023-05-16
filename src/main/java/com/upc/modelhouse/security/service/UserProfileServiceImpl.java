@@ -30,7 +30,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Override
     public UserProfile findByAccountId(Long accountId) {
-        return userProfileRepository.findUserProfileById(accountId);
+        return userProfileRepository.findUserProfileByAccount_Id(accountId);
     }
 
     @Override

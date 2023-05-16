@@ -1,5 +1,7 @@
 package com.upc.modelhouse.security.resource;
 
+import com.upc.modelhouse.security.resource.BusinessProfile.BusinessProfileDto;
+import com.upc.modelhouse.security.resource.UserProfile.UserProfileDto;
 import lombok.*;
 
 @Getter
@@ -14,4 +16,6 @@ public class UserResource {
     private Boolean isActive;
     private String role;
     private String token;
+    private UserProfileDto userProfileDto;
+    private BusinessProfileDto businessProfileDto;
 }

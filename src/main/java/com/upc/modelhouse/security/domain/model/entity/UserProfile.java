@@ -27,10 +27,8 @@ public class UserProfile {
     private Date registrationDate;
     @Column(name = "last_login")
     private Date lastLogin;
-    @Column(name = "account_status")
-    private Integer accountStatus;
 
-    @OneToOne()
+    @OneToOne
     @JoinColumn(name = "account_id")
     private Account account;
 }

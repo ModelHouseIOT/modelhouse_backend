@@ -25,7 +25,7 @@ public class BusinessProfile {
     @Column(name = "foundation_date")
     private String foundationDate;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "account_id")
     private Account account;
 }
