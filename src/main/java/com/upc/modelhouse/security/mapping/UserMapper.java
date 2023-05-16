@@ -36,7 +36,7 @@ public class UserMapper implements Serializable {
     }
 
     public UserResource toResource(Account account) {
-        return new UserResource(account.getId(), account.getEmailAddress(), account.getIsActive(), account.getRole());
+        return modelMapper.map(account, UserResource.class);
     }
 
 }

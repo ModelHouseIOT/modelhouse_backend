@@ -1,14 +1,12 @@
 package com.upc.modelhouse.security.domain.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
 @Setter
+@With
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -27,7 +25,7 @@ public class BusinessProfile {
     @Column(name = "foundation_date")
     private String foundationDate;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "account_id", nullable = false)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id")
     private Account account;
 }

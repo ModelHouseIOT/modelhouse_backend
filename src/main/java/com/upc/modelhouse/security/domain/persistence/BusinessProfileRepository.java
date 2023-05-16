@@ -9,5 +9,5 @@ import java.util.List;
 public interface BusinessProfileRepository extends JpaRepository<BusinessProfile, Long> {
     List<BusinessProfile> findAll();
     BusinessProfile findBusinessProfileById(Long id);
-    BusinessProfile findBusinessProfileByAccount_Id(Long id);
+    //BusinessProfile findBusinessProfileByAccount_Id(Long id);
 }

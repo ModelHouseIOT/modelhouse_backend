@@ -13,4 +13,5 @@ public class UserResource {
     private String emailAddress;
     private Boolean isActive;
     private String role;
+    private String token;
 }

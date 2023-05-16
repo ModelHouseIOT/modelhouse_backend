@@ -3,9 +3,11 @@ package com.upc.modelhouse.security.api;
 import com.upc.modelhouse.security.domain.model.entity.Account;
 import com.upc.modelhouse.security.domain.persistence.UserRepository;
 import com.upc.modelhouse.security.domain.service.AuthService;
+import com.upc.modelhouse.security.mapping.UserMapper;
 import com.upc.modelhouse.security.resource.AuthCredentialsResource;
 import com.upc.modelhouse.security.resource.JwtResponse;
 import com.upc.modelhouse.security.resource.ResponseErrorResource;
+import com.upc.modelhouse.security.resource.UserResource;
 import com.upc.modelhouse.security.util.JwtUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
@@ -40,14 +42,14 @@ public class AuthController {
     public ResponseEntity<?> login(@Valid @RequestBody AuthCredentialsResource account) {
         ResponseErrorResource errorResource = new ResponseErrorResource();
         errorResource.setMessage(statusBody);
-        Account response = authService.login(account);
-        //Authentication authentication = manager.authenticate(
-        //        new UsernamePasswordAuthenticationToken(account.getEmailAddress(), account.getPassword()));
-        //SecurityContextHolder.getContext().setAuthentication(authentication);
-        //String jwt = jwtUtil.generateJwtToken(authentication);
+        UserResource response = authService.login(account);
+        Authentication authentication = manager.authenticate(new UsernamePasswordAuthenticationToken(account.getEmailAddress(), account.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtUtil.generateJwtToken(authentication);
         if(response == null) {
             return ResponseEntity.badRequest().body(errorResource);
         }
+        response.setToken(jwt);
         return ResponseEntity.ok(response);
     }
 

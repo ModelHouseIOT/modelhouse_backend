@@ -1,10 +1,7 @@
 package com.upc.modelhouse.security.domain.model.entity;
 
 import com.upc.modelhouse.shared.domain.model.AuditModel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -12,6 +9,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@With
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -26,6 +24,9 @@ public class Account extends AuditModel {
     private Boolean isActive;
     private String role;
     private String password;
-    //@OneToMany
-    //private List<UserProfile> userProfiles;
+    @OneToOne(mappedBy = "user_profile", cascade = CascadeType.ALL)
+    private UserProfile userProfile;
+
+    @OneToOne(mappedBy = "business_profile", cascade = CascadeType.ALL)
+    private BusinessProfile businessProfile;
 }
