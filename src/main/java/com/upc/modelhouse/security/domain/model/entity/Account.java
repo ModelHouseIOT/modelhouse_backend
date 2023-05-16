@@ -20,12 +20,12 @@ public class Account extends AuditModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Email
-    @JoinColumn(name = "email_address")
+    @Column(name = "email_address")
     private String emailAddress;
-    @JoinColumn(name = "is_active")
+    @Column(name = "is_active")
     private Boolean isActive;
     private String role;
     private String password;
-    @OneToMany
-    private List<UserProfile> userProfiles;
+    //@OneToMany
+    //private List<UserProfile> userProfiles;
 }
