@@ -3,6 +3,7 @@ package com.upc.modelhouse.security.domain.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -28,4 +29,5 @@ public class BusinessProfile {
     @OneToOne
     @JoinColumn(name = "account_id")
     private Account account;
+
 }
