@@ -33,7 +33,7 @@ public class ProjectController {
     public List<ProjectDto> getAll(){
         return mapper.listToResource(projectService.getAll());
     }
-    @GetMapping("{businessId}")
+    @GetMapping("business/{businessId}")
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
     public List<ProjectDto> getAllByBusinessId(@PathVariable("businessId") Long id){
         return mapper.listToResource(projectService.findAllByBusinessProfileId(id));

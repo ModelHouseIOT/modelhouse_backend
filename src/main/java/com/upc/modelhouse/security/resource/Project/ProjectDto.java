@@ -1,13 +1,11 @@
 package com.upc.modelhouse.security.resource.Project;
 
 import com.upc.modelhouse.security.resource.BusinessProfile.BusinessProfileDto;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.With;
+import lombok.*;
 
 import javax.persistence.Entity;
 
+@Getter
 @Setter
 @With
 @NoArgsConstructor
@@ -16,5 +14,5 @@ public class ProjectDto {
     private String title;
     private String description;
     private String image;
-    private BusinessProfileDto businessProfileDto;
+    private Long businessProfileId;
 }
