@@ -48,11 +48,11 @@ public class UserProfileServiceImpl implements UserProfileService {
         if(!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
         return userProfileRepository.findById(id).map(profile ->
-                        userProfileRepository.save(profile.withFirstName(profile.getFirstName())
-                                .withImage(profile.getImage())
-                                .withLastName(profile.getLastName())
-                                .withGender(profile.getGender())
-                                .withPhoneNumber(profile.getPhoneNumber())))
+                        userProfileRepository.save(profile.withFirstName(userProfile.getFirstName())
+                                .withImage(userProfile.getImage())
+                                .withLastName(userProfile.getLastName())
+                                .withGender(userProfile.getGender())
+                                .withPhoneNumber(userProfile.getPhoneNumber())))
                 .orElseThrow(() -> new ResourceNotFoundException(ENTITY, id));
     }
 }

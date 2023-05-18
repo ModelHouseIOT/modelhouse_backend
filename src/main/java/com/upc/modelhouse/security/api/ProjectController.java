@@ -43,19 +43,19 @@ public class ProjectController {
     public ProjectDto getById(@PathVariable("id") Long id){
         return mapper.toResource(projectService.findById(id));
     }
-    @PostMapping
+    @PostMapping("{id}")
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
-    public ProjectDto createProject(@RequestBody CreateProjectDto createProjectDto){
-        return mapper.toResource(projectService.createProject(mapper.toModel(createProjectDto)));
+    public ProjectDto createProject(@PathVariable("id") Long id, @RequestBody CreateProjectDto createProjectDto){
+        return mapper.toResource(projectService.createProject(id, mapper.toModel(createProjectDto)));
     }
-    @PutMapping("{accountId}")
+    @PutMapping("{id}")
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
-    public ProjectDto updateProject(@PathVariable("accountId") Long id, @RequestBody UpdateProjectDto updateBusinessProfileDto){
+    public ProjectDto updateProject(@PathVariable("id") Long id, @RequestBody UpdateProjectDto updateBusinessProfileDto){
         return mapper.toResource(projectService.updateProject(id, mapper.toModel(updateBusinessProfileDto)));
     }
-    @DeleteMapping("{accountId}")
+    @DeleteMapping("{id}")
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
-    public ResponseEntity<?> deleteProject(@PathVariable("accountId") Long id){
+    public ResponseEntity<?> deleteProject(@PathVariable("id") Long id){
         return  projectService.deleteProject(id);
     }
 }

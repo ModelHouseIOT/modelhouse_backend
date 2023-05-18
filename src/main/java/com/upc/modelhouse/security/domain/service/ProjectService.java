@@ -9,7 +9,7 @@ public interface ProjectService {
     List<Project> getAll();
     List<Project> findAllByBusinessProfileId(Long id);
     Project findById(Long id);
-    Project createProject(Project project);
+    Project createProject(Long businessId, Project project);
     Project updateProject(Long id, Project project);
     ResponseEntity<?> deleteProject(Long id);
 

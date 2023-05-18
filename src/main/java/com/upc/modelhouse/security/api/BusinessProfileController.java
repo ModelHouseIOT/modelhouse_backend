@@ -41,9 +41,9 @@ public class BusinessProfileController {
     public BusinessProfileDto createFavorite(@RequestBody CreateBusinessProfileDto resource){
         return mapper.toResource(businessProfileService.create(mapper.toModel(resource)));
     }
-    @PutMapping("{accountId}")
+    @PutMapping("{id}")
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
-    public BusinessProfileDto updateUserProfile(@PathVariable("accountId") Long id, @RequestBody UpdateBusinessProfileDto updateBusinessProfileDto){
+    public BusinessProfileDto updateUserProfile(@PathVariable("id") Long id, @RequestBody UpdateBusinessProfileDto updateBusinessProfileDto){
         return mapper.toResource(businessProfileService.update(id, mapper.toModel(updateBusinessProfileDto)));
     }
 }

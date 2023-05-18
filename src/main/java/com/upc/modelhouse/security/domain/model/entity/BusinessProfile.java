@@ -30,7 +30,7 @@ public class BusinessProfile {
     @JoinColumn(name = "account_id")
     private Account account;
 
-    @OneToMany(mappedBy = "businessProfile")
-    private List<Project> projects;
+    //@OneToMany(mappedBy = "businessProfile")
+    //private List<Project> projects;
 
 }

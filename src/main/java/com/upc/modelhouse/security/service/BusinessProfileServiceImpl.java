@@ -46,12 +46,12 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
         if(!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
         return businessProfileRepository.findById(id).map(profile ->
-                        businessProfileRepository.save(profile.withName(profile.getName())
-                                .withDescription(profile.getDescription())
-                                .withImage(profile.getImage())
-                                .withAddress(profile.getAddress())
-                                .withWebSite(profile.getWebSite())
-                                .withPhoneBusiness(profile.getPhoneBusiness())))
+                        businessProfileRepository.save(profile.withName(businessProfile.getName())
+                                .withDescription(businessProfile.getDescription())
+                                .withImage(businessProfile.getImage())
+                                .withAddress(businessProfile.getAddress())
+                                .withWebSite(businessProfile.getWebSite())
+                                .withPhoneBusiness(businessProfile.getPhoneBusiness())))
                 .orElseThrow(() -> new ResourceNotFoundException(ENTITY, id));
     }
 }

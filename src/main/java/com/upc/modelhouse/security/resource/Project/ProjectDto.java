@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProjectDto {
+    private Long id;
     private String title;
     private String description;
     private String image;

@@ -20,7 +20,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class ProjectServiceImpl implements ProjectService {
     private final ProjectRepository projectRepository;
-    private final BusinessProfileRepository businessProfile;
+    private final BusinessProfileRepository businessProfileRepository;
     private final Validator validator;
     private static final String ENTITY = "Project";
 
@@ -40,11 +40,15 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project createProject(Project project) {
+    public Project createProject(Long businessId,Project project) {
         Set<ConstraintViolation<Project>> violations = validator.validate(project);
         if(!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
-        return projectRepository.save(project);
+
+        return businessProfileRepository.findById(businessId).map(businessProfile -> {
+            project.setBusinessProfile(businessProfile);
+            return projectRepository.save(project);
+        }).orElseThrow(() -> new ResourceNotFoundException("BusinessProfile", businessId));
     }
 
     @Override
@@ -53,9 +57,9 @@ public class ProjectServiceImpl implements ProjectService {
         if(!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
         return projectRepository.findById(id).map(change ->
-                projectRepository.save(change.withTitle(change.getTitle())
-                        .withDescription(change.getDescription())
-                        .withImage(change.getImage())))
+                projectRepository.save(change.withTitle(project.getTitle())
+                        .withDescription(project.getDescription())
+                        .withImage(project.getImage())))
                 .orElseThrow(()-> new ResourceNotFoundException(ENTITY , id));
     }
 

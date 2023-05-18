@@ -37,9 +37,9 @@ public class UserProfileController {
     public UserProfileDto createFavorite(@RequestBody CreateUserProfileDto resource){
         return mapper.toResource(userProfileService.create(mapper.toModel(resource)));
     }
-    @PutMapping("{accountId}")
+    @PutMapping("{id}")
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
-    public UserProfileDto updateUserProfile(@PathVariable("accountId") Long id, @RequestBody CreateUserProfileDto createUserProfileDto){
+    public UserProfileDto updateUserProfile(@PathVariable("id") Long id, @RequestBody CreateUserProfileDto createUserProfileDto){
         return mapper.toResource(userProfileService.update(id, mapper.toModel(createUserProfileDto)));
     }
 }

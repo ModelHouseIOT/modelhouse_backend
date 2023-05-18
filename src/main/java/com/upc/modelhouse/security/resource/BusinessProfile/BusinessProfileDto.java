@@ -10,6 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BusinessProfileDto {
+    private Long id;
     private String name;
     private String description;
     private String image;

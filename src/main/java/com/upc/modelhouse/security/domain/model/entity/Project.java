@@ -18,7 +18,7 @@ public class Project {
     private String description;
     private String image;
 
-    @ManyToOne
-    @JoinColumn(name = "business_profile_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "business_profile_id", nullable = false)
     private BusinessProfile businessProfile;
 }
