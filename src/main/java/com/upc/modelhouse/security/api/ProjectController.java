@@ -2,9 +2,6 @@ package com.upc.modelhouse.security.api;
 
 import com.upc.modelhouse.security.domain.service.ProjectService;
 import com.upc.modelhouse.security.mapping.ProjectMapper;
-import com.upc.modelhouse.security.resource.BusinessProfile.BusinessProfileDto;
-import com.upc.modelhouse.security.resource.BusinessProfile.CreateBusinessProfileDto;
-import com.upc.modelhouse.security.resource.BusinessProfile.UpdateBusinessProfileDto;
 import com.upc.modelhouse.security.resource.Project.CreateProjectDto;
 import com.upc.modelhouse.security.resource.Project.ProjectDto;
 import com.upc.modelhouse.security.resource.Project.UpdateProjectDto;

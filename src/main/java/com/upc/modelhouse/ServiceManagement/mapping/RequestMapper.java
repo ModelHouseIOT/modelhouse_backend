@@ -1,12 +1,11 @@
 package com.upc.modelhouse.ServiceManagement.mapping;
 
-import com.upc.modelhouse.security.domain.model.entity.Project;
-import com.upc.modelhouse.security.resource.Project.CreateProjectDto;
-import com.upc.modelhouse.security.resource.Project.ProjectDto;
-import com.upc.modelhouse.security.resource.Project.UpdateProjectDto;
+import com.upc.modelhouse.ServiceManagement.domain.model.entity.Request;
+import com.upc.modelhouse.ServiceManagement.resource.Request.ChangeStatusRequestDto;
+import com.upc.modelhouse.ServiceManagement.resource.Request.CreateRequestDto;
+import com.upc.modelhouse.ServiceManagement.resource.Request.RequestDto;
 import com.upc.modelhouse.shared.mapping.EnhancedModelMapper;
 import lombok.AllArgsConstructor;
-import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,22 +18,22 @@ public class RequestMapper implements Serializable {
     @Autowired
     EnhancedModelMapper mapper;
 
-    public ProjectDto toResource(Project model){
-        return mapper.map(model, ProjectDto.class);
+    public RequestDto toResource(Request model){
+        return mapper.map(model, RequestDto.class);
     }
-    public List<ProjectDto> listToResource(List<Project> model){
-        return mapper.mapList(model, ProjectDto.class);
+    public List<RequestDto> listToResource(List<Request> model){
+        return mapper.mapList(model, RequestDto.class);
     }
-    public Project toModel(ProjectDto resource) {
-        return mapper.map(resource, Project.class);
-    }
-
-    public Project toModel(CreateProjectDto resource) {
-        return mapper.map(resource, Project.class);
+    public Request toModel(RequestDto resource) {
+        return mapper.map(resource, Request.class);
     }
 
-    public Project toModel(UpdateProjectDto resource) {
-        return mapper.map(resource, Project.class);
+    public Request toModel(CreateRequestDto resource) {
+        return mapper.map(resource, Request.class);
+    }
+
+    public Request toModel(ChangeStatusRequestDto resource) {
+        return mapper.map(resource, Request.class);
     }
 
 }
