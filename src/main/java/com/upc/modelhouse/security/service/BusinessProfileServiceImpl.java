@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -37,6 +38,7 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
         Set<ConstraintViolation<BusinessProfile>> violations = validator.validate(businessProfile);
         if(!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
+        businessProfile.setRegistrationDate(new Date());
         return businessProfileRepository.save(businessProfile);
     }
 
@@ -51,6 +53,7 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
                                 .withImage(businessProfile.getImage())
                                 .withAddress(businessProfile.getAddress())
                                 .withWebSite(businessProfile.getWebSite())
+                                .withRegistrationDate(new Date())
                                 .withPhoneBusiness(businessProfile.getPhoneBusiness())))
                 .orElseThrow(() -> new ResourceNotFoundException(ENTITY, id));
     }
