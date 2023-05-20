@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -39,6 +40,7 @@ public class UserProfileServiceImpl implements UserProfileService {
         Set<ConstraintViolation<UserProfile>> violations = validator.validate(userProfile);
         if(!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
+        userProfile.setRegistrationDate(new Date());
         return userProfileRepository.save(userProfile);
     }
 
@@ -52,7 +54,8 @@ public class UserProfileServiceImpl implements UserProfileService {
                                 .withImage(userProfile.getImage())
                                 .withLastName(userProfile.getLastName())
                                 .withGender(userProfile.getGender())
-                                .withPhoneNumber(userProfile.getPhoneNumber())))
+                                .withPhoneNumber(userProfile.getPhoneNumber())
+                                .withLastLogin(new Date())))
                 .orElseThrow(() -> new ResourceNotFoundException(ENTITY, id));
     }
 }

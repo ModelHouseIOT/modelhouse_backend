@@ -34,8 +34,11 @@ public class AuthServiceImpl implements AuthService {
     public Account register(AuthCredentialsResource credentialsResource) {
         Account registeredAccount = new Account();
         registeredAccount.setEmailAddress(credentialsResource.getEmailAddress());
-            registeredAccount.setPassword(encoder.encode(credentialsResource.getPassword()));
+        registeredAccount.setPassword(encoder.encode(credentialsResource.getPassword()));
+        registeredAccount.setIsActive(true);
+        registeredAccount.setRole("user");
         registeredAccount = userRepository.save(registeredAccount);
+
         return registeredAccount;
     }
 }

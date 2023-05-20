@@ -3,6 +3,7 @@ package com.upc.modelhouse.security.domain.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -23,8 +24,10 @@ public class BusinessProfile {
     private String webSite;
     @Column(name = "phone_business")
     private String phoneBusiness;
-    @Column(name = "foundation_date")
-    private String foundationDate;
+    @Column(name = "registration_date")
+    private Date registrationDate;
+    @Column(name = "last_login")
+    private Date lastLogin;
 
     @OneToOne
     @JoinColumn(name = "account_id")
