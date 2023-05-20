@@ -1,10 +1,13 @@
 package com.upc.modelhouse.security.api;
 
+import com.upc.modelhouse.security.domain.model.entity.Account;
 import com.upc.modelhouse.security.domain.persistence.UserRepository;
 import com.upc.modelhouse.security.domain.service.AuthService;
+import com.upc.modelhouse.security.mapping.UserMapper;
 import com.upc.modelhouse.security.resource.AuthCredentialsResource;
 import com.upc.modelhouse.security.resource.JwtResponse;
 import com.upc.modelhouse.security.resource.ResponseErrorResource;
+import com.upc.modelhouse.security.resource.UserResource;
 import com.upc.modelhouse.security.util.JwtUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
@@ -36,12 +39,18 @@ public class AuthController {
 
     @PostMapping("/login")
     @Operation(summary = "Login", tags = {"Auth"})
-    public ResponseEntity<?> login(@Valid @RequestBody AuthCredentialsResource user) {
-        Authentication authentication = manager.authenticate(
-                new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
+    public ResponseEntity<?> login(@Valid @RequestBody AuthCredentialsResource account) {
+        ResponseErrorResource errorResource = new ResponseErrorResource();
+        errorResource.setMessage(statusBody);
+        UserResource response = authService.login(account);
+        Authentication authentication = manager.authenticate(new UsernamePasswordAuthenticationToken(account.getEmailAddress(), account.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtil.generateJwtToken(authentication);
-        return ResponseEntity.ok(new JwtResponse(jwt));
+        if(response == null) {
+            return ResponseEntity.badRequest().body(errorResource);
+        }
+        response.setToken(jwt);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/register")
@@ -51,7 +60,7 @@ public class AuthController {
         ResponseErrorResource errorResource = new ResponseErrorResource();
         errorResource.setMessage(statusBody);
 
-        if(userRepository.findByEmail(credentials.getEmail()) != null) {
+        if(userRepository.findByEmailAddress(credentials.getEmailAddress()) != null) {
             return ResponseEntity.badRequest().body(errorResource);
         }
 

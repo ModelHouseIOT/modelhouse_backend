@@ -8,6 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateUserResource {
-    private String email;
+    private String emailAddress;
     private String password;
 }
