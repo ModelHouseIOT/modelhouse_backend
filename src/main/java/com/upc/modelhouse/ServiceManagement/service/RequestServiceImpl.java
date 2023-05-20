@@ -41,6 +41,8 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public Request create(Long userId, Long businessId, Request request) {
+        if(userId.equals(businessId))
+            throw new ResourceValidationException(ENTITY, "The company cannot make a request to it");
         Set<ConstraintViolation<Request>> violations = validator.validate(request);
         if(!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);

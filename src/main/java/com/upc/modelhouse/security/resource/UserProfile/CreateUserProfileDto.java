@@ -24,8 +24,6 @@ public class CreateUserProfileDto {
     @NotNull
     @NotBlank
     private String phoneNumber;
-    private Date registrationDate;
-    private Date lastLogin;
     @NotNull
     private Long accountId;
 }
