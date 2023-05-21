@@ -52,12 +52,12 @@ public class ProjectResourceServiceImpl implements ProjectResourceService {
     }
 
     @Override
-    public ProjectResource update(Long id, ProjectResource proposal) {
-        Set<ConstraintViolation<ProjectResource>> violations = validator.validate(proposal);
+    public ProjectResource update(Long id, ProjectResource projectResource) {
+        Set<ConstraintViolation<ProjectResource>> violations = validator.validate(projectResource);
         if(!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
-        return projectResourceRepository.findById(id).map(projectResource ->
-                        projectResourceRepository.save(projectResource.withDescription(proposal.getDescription())
+        return projectResourceRepository.findById(id).map(project ->
+                        projectResourceRepository.save(project.withDescription(projectResource.getDescription())
                                 .withQuantity(projectResource.getQuantity())
                                 .withState(projectResource.getState())))
                 .orElseThrow(()-> new ResourceNotFoundException(ENTITY , id));
