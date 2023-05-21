@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -46,7 +47,7 @@ public class RequestServiceImpl implements RequestService {
         Set<ConstraintViolation<Request>> violations = validator.validate(request);
         if(!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
-
+        request.setRequestAt(new Date());
         return businessProfileRepository.findById(businessId).map(businessProfile -> {
             request.setBusinessProfile(businessProfile);
             request.setUserProfile(userProfileRepository.findUserProfileById(userId));
@@ -56,8 +57,8 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public ResponseEntity<?> delete(Long id) {
-        return requestRepository.findById(id).map(project -> {
-            requestRepository.delete(project);
+        return requestRepository.findById(id).map(request -> {
+            requestRepository.delete(request);
             return ResponseEntity.ok().build();
         }).orElseThrow(()->new ResourceNotFoundException(ENTITY, id));
     }

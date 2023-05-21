@@ -20,7 +20,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class BusinessProfileServiceImpl implements BusinessProfileService {
     private final BusinessProfileRepository businessProfileRepository;
-    private final UserRepository userRepository;
+    private final UserRepository accountRepository;
     private final Validator validator;
     private static final String ENTITY = "BusinessProfile";
     @Override
@@ -34,12 +34,14 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
     }
 
     @Override
-    public BusinessProfile create(BusinessProfile businessProfile) {
+    public BusinessProfile create(Long accountId, BusinessProfile businessProfile) {
         Set<ConstraintViolation<BusinessProfile>> violations = validator.validate(businessProfile);
         if(!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
-        businessProfile.setRegistrationDate(new Date());
-        return businessProfileRepository.save(businessProfile);
+        return accountRepository.findById(accountId).map(account -> {
+            businessProfile.setAccount(account);
+            return businessProfileRepository.save(businessProfile);
+        }).orElseThrow(() -> new ResourceNotFoundException("Request", accountId));
     }
 
     @Override
