@@ -16,6 +16,4 @@ public class UserResource {
     private Boolean isActive;
     private String role;
     private String token;
-    private UserProfileDto userProfileDto;
-    private BusinessProfileDto businessProfileDto;
 }

@@ -27,12 +27,12 @@ public class UserProfileController {
     public List<UserProfileDto> getAll(){
         return mapper.listToResource(userProfileService.findAll());
     }
-    @GetMapping("{accountId}")
+    @GetMapping("account/{accountId}")
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
     public UserProfileDto getUserProfileByAccount(@PathVariable("accountId") Long id){
         return mapper.toResource(userProfileService.findByAccountId(id));
     }
-    @PostMapping("{accountId}")
+    @PostMapping("account/{accountId}")
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
     public UserProfileDto createFavorite(@PathVariable("accountId") Long accountId,@RequestBody CreateUserProfileDto resource){
         return mapper.toResource(userProfileService.create(accountId, mapper.toModel(resource)));

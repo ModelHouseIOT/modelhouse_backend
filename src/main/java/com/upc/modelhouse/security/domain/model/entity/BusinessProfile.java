@@ -32,8 +32,4 @@ public class BusinessProfile {
     @OneToOne
     @JoinColumn(name = "account_id")
     private Account account;
-
-    //@OneToMany(mappedBy = "businessProfile")
-    //private List<Project> projects;
-
 }

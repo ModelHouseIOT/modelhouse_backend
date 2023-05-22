@@ -1,7 +1,6 @@
 package com.upc.modelhouse.ServiceManagement.service;
 
 import com.upc.modelhouse.ServiceManagement.domain.model.entity.ProjectActivity;
-import com.upc.modelhouse.ServiceManagement.domain.model.entity.ProjectResource;
 import com.upc.modelhouse.ServiceManagement.domain.persistence.ProjectActivityRepository;
 import com.upc.modelhouse.ServiceManagement.domain.persistence.ProposalRepository;
 import com.upc.modelhouse.ServiceManagement.domain.service.ProjectActivityService;

@@ -29,7 +29,7 @@ public class ProjectActivityController {
     public List<ProjectActivityDto> getAllByProposalId(@PathVariable("proposalId") Long proposalId){
         return mapper.listToResource(projectActivityService.findAllProposalId(proposalId));
     }
-    @PostMapping("{proposalId}")
+    @PostMapping("proposal/{proposalId}")
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
     public ProjectActivityDto create(@PathVariable("proposalId") Long proposalId,
                                             @RequestBody CreateProjectActivityDto createProjectActivityDto){

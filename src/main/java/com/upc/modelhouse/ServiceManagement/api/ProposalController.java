@@ -29,12 +29,12 @@ public class ProposalController {
     public List<ProposalDto> getAll(){
         return mapper.listToResource(proposalService.getAll());
     }
-    @GetMapping("{requestId}")
+    @GetMapping("request/{requestId}")
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
     public ProposalDto getAllByRequestId(@PathVariable("requestId") Long id){
         return mapper.toResource(proposalService.findAllRequestId(id));
     }
-    @PostMapping("{requestId}")
+    @PostMapping("request/{requestId}")
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
     public ProposalDto createProject(@PathVariable("requestId") Long requestId,
                                     @RequestBody CreateProposalDto createProposalDto){
