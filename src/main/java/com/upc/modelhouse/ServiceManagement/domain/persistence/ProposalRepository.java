@@ -11,5 +11,5 @@ import java.util.List;
 public interface ProposalRepository extends JpaRepository<Proposal, Long> {
     Proposal findProposalById(Long id);
     List<Proposal> findAll();
-    List<Proposal> findAllByRequestId(Long id);
+    Proposal findByRequestId(Long id);
 }

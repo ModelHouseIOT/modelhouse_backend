@@ -39,6 +39,9 @@ public class UserProfileServiceImpl implements UserProfileService {
         Set<ConstraintViolation<UserProfile>> violations = validator.validate(userProfile);
         if(!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
+        UserProfile userProfileExist = userProfileRepository.findUserProfileByAccount_Id(accountId);
+        if(userProfileExist != null)
+            throw new ResourceNotFoundException("User Profile is exist");
         return accountRepository.findById(accountId).map(account -> {
             userProfile.setAccount(account);
             return userProfileRepository.save(userProfile);

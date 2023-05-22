@@ -1,5 +1,6 @@
 package com.upc.modelhouse.ServiceManagement.resource.Proposal;
 
+import com.upc.modelhouse.ServiceManagement.resource.Request.RequestDto;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -18,5 +19,5 @@ public class ProposalDto {
     private String status;
     private Boolean isResponse;
     private Date responseDate;
-    private Long request_id;
+    private RequestDto request;
 }

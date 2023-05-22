@@ -14,7 +14,7 @@ public class CreateProposalDto {
     @NotNull
     private String description;
     @NotNull
-    private String price;
+    private Float price;
     private String status;
     private Boolean isResponse;
 }

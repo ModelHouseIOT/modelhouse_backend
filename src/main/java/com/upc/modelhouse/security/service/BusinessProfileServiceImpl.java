@@ -38,6 +38,9 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
         Set<ConstraintViolation<BusinessProfile>> violations = validator.validate(businessProfile);
         if(!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
+        BusinessProfile businessProfileExist = businessProfileRepository.findBusinessProfileByAccount_Id(accountId);
+        if(businessProfileExist != null)
+            throw new ResourceNotFoundException("Business Profile is exist");
         return accountRepository.findById(accountId).map(account -> {
             businessProfile.setAccount(account);
             return businessProfileRepository.save(businessProfile);

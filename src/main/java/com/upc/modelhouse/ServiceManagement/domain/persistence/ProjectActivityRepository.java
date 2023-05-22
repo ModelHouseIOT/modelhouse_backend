@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface ProjectActivityRepository extends JpaRepository<ProjectActivity, Long> {
-    ProjectActivity findProjectActivityBy(Long id);
+    ProjectActivity findProjectActivityById(Long id);
     List<ProjectActivity> findAll();
     List<ProjectActivity> findAllByProposalId(Long id);
 }

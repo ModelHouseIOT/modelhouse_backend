@@ -33,8 +33,8 @@ public class ProposalServiceImpl implements ProposalService {
     }
 
     @Override
-    public List<Proposal> findAllRequestId(Long id) {
-        return proposalRepository.findAllByRequestId(id);
+    public Proposal findAllRequestId(Long id) {
+        return proposalRepository.findByRequestId(id);
     }
 
     @Override
@@ -43,11 +43,13 @@ public class ProposalServiceImpl implements ProposalService {
         if(!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
         proposal.setProposalDate(new Date());
+        Proposal proposalExist = proposalRepository.findByRequestId(requestId);
+        if(proposalExist != null)
+            throw new ResourceNotFoundException("Proposal is exist");
         return requestRepository.findById(requestId).map(request -> {
             proposal.setRequest(request);
             return proposalRepository.save(proposal);
         }).orElseThrow(() -> new ResourceNotFoundException("Request", requestId));
-
     }
 
     @Override

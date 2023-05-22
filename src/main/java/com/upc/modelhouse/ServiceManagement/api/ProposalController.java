@@ -31,8 +31,8 @@ public class ProposalController {
     }
     @GetMapping("{requestId}")
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
-    public List<ProposalDto> getAllByRequestId(@PathVariable("requestId") Long id){
-        return mapper.listToResource(proposalService.findAllRequestId(id));
+    public ProposalDto getAllByRequestId(@PathVariable("requestId") Long id){
+        return mapper.toResource(proposalService.findAllRequestId(id));
     }
     @PostMapping("{requestId}")
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")

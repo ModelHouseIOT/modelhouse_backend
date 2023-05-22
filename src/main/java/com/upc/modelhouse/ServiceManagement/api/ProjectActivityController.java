@@ -24,7 +24,7 @@ public class ProjectActivityController {
         this.projectActivityService = projectActivityService;
         this.mapper = mapper;
     }
-    @GetMapping("business/{proposalId}")
+    @GetMapping("proposal/{proposalId}")
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
     public List<ProjectActivityDto> getAllByProposalId(@PathVariable("proposalId") Long proposalId){
         return mapper.listToResource(projectActivityService.findAllProposalId(proposalId));

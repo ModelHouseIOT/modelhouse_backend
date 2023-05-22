@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ProposalService {
     List<Proposal> getAll();
-    List<Proposal> findAllRequestId(Long id);
+    Proposal findAllRequestId(Long id);
     Proposal create(Long requestId, Proposal request);
     ResponseEntity<?> delete(Long id);
     Proposal update(Long id, Proposal request);

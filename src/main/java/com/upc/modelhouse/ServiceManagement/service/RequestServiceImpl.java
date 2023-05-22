@@ -3,6 +3,7 @@ package com.upc.modelhouse.ServiceManagement.service;
 import com.upc.modelhouse.ServiceManagement.domain.model.entity.Request;
 import com.upc.modelhouse.ServiceManagement.domain.persistence.RequestRepository;
 import com.upc.modelhouse.ServiceManagement.domain.service.RequestService;
+import com.upc.modelhouse.security.domain.model.entity.UserProfile;
 import com.upc.modelhouse.security.domain.persistence.BusinessProfileRepository;
 import com.upc.modelhouse.security.domain.persistence.UserProfileRepository;
 import com.upc.modelhouse.shared.exception.ResourceNotFoundException;
@@ -43,14 +44,19 @@ public class RequestServiceImpl implements RequestService {
     @Override
     public Request create(Long userId, Long businessId, Request request) {
         if(userId.equals(businessId))
-            throw new ResourceValidationException(ENTITY, "The company cannot make a request to it");
+            throw new ResourceNotFoundException("The company cannot make a request to it");
         Set<ConstraintViolation<Request>> violations = validator.validate(request);
         if(!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
         request.setRequestAt(new Date());
         return businessProfileRepository.findById(businessId).map(businessProfile -> {
+            UserProfile userProfile = userProfileRepository.findUserProfileById(userId);
+            if(userProfile == null)
+                throw new ResourceNotFoundException("The client does not exist");
+            if(businessProfile.getAccount().getId().equals(userProfile.getAccount().getId()))
+                throw new ResourceNotFoundException("The company cannot make a request to it");
             request.setBusinessProfile(businessProfile);
-            request.setUserProfile(userProfileRepository.findUserProfileById(userId));
+            request.setUserProfile(userProfile);
             return requestRepository.save(request);
         }).orElseThrow(() -> new ResourceNotFoundException("BusinessProfile", businessId));
     }
