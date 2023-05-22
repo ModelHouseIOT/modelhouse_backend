@@ -19,5 +19,4 @@ public class BusinessProfileDto {
     private String phoneBusiness;
     private String foundationDate;
     private UserResource account;
-
 }

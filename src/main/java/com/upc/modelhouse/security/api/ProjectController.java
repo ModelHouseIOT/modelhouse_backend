@@ -40,10 +40,10 @@ public class ProjectController {
     public ProjectDto getById(@PathVariable("id") Long id){
         return mapper.toResource(projectService.findById(id));
     }
-    @PostMapping("{id}")
+    @PostMapping("businessProfile/{businessId}")
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
-    public ProjectDto createProject(@PathVariable("id") Long id, @RequestBody CreateProjectDto createProjectDto){
-        return mapper.toResource(projectService.createProject(id, mapper.toModel(createProjectDto)));
+    public ProjectDto createProject(@PathVariable("businessId") Long businessId, @RequestBody CreateProjectDto createProjectDto){
+        return mapper.toResource(projectService.createProject(businessId, mapper.toModel(createProjectDto)));
     }
     @PutMapping("{id}")
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")

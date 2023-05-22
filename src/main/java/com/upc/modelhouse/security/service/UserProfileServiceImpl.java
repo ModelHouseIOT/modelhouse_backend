@@ -21,7 +21,7 @@ import java.util.Set;
 public class UserProfileServiceImpl implements UserProfileService {
 
     private final UserProfileRepository userProfileRepository;
-    private final UserRepository  userRepository;
+    private final UserRepository accountRepository;
     private final Validator validator;
     private static final String ENTITY = "UserProfile";
     @Override
@@ -35,13 +35,18 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
 
     @Override
-    public UserProfile create(UserProfile userProfile) {
-        //Account account =
+    public UserProfile create(Long accountId, UserProfile userProfile) {
         Set<ConstraintViolation<UserProfile>> violations = validator.validate(userProfile);
         if(!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
-        userProfile.setRegistrationDate(new Date());
-        return userProfileRepository.save(userProfile);
+        UserProfile userProfileExist = userProfileRepository.findUserProfileByAccount_Id(accountId);
+        if(userProfileExist != null)
+            throw new ResourceNotFoundException("User Profile is exist");
+        return accountRepository.findById(accountId).map(account -> {
+            userProfile.setAccount(account);
+            return userProfileRepository.save(userProfile);
+        }).orElseThrow(() -> new ResourceNotFoundException("Request", accountId));
+
     }
 
     @Override

@@ -31,15 +31,15 @@ public class BusinessProfileController {
     public List<BusinessProfileDto> getAll(){
         return mapper.listToResource(businessProfileService.findAll());
     }
-    @GetMapping("{accountId}")
+    @GetMapping("account/{accountId}")
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
     public BusinessProfileDto getUserProfileByAccount(@PathVariable("accountId") Long id){
         return mapper.toResource(businessProfileService.findByAccountId(id));
     }
-    @PostMapping
+    @PostMapping("account/{accountId}")
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
-    public BusinessProfileDto createFavorite(@RequestBody CreateBusinessProfileDto resource){
-        return mapper.toResource(businessProfileService.create(mapper.toModel(resource)));
+    public BusinessProfileDto createFavorite(@PathVariable("accountId") Long accountId,@RequestBody CreateBusinessProfileDto resource){
+        return mapper.toResource(businessProfileService.create(accountId, mapper.toModel(resource)));
     }
     @PutMapping("{id}")
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")

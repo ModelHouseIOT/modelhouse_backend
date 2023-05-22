@@ -46,8 +46,8 @@ public class RequestController {
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
     public RequestDto createProject(@PathVariable("userId") Long userId,
                                     @PathVariable("businessId") Long businessId,
-                                    @RequestBody CreateRequestDto createProjectDto){
-        return mapper.toResource(requestService.create(userId, businessId, mapper.toModel(createProjectDto)));
+                                    @RequestBody CreateRequestDto createRequestDto){
+        return mapper.toResource(requestService.create(userId, businessId, mapper.toModel(createRequestDto)));
     }
     @PutMapping("{id}")
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
