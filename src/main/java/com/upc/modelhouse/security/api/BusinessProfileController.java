@@ -12,9 +12,10 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.PermitAll;
 import java.util.List;
 
-@SecurityRequirement(name = "acme")
+//@SecurityRequirement(name = "acme")
 @RestController
 @CrossOrigin
 @RequestMapping("/api/v1/business_profile")
@@ -27,7 +28,6 @@ public class BusinessProfileController {
         this.mapper = mapper;
     }
     @GetMapping()
-    @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
     public List<BusinessProfileDto> getAll(){
         return mapper.listToResource(businessProfileService.findAll());
     }
@@ -36,7 +36,11 @@ public class BusinessProfileController {
     public BusinessProfileDto getUserProfileByAccount(@PathVariable("accountId") Long id){
         return mapper.toResource(businessProfileService.findByAccountId(id));
     }
-    @PostMapping("account/{accountId}")
+    @GetMapping("profile/{accountId}")
+    public BusinessProfileDto getUserProfileById(@PathVariable("accountId") Long id){
+        return mapper.toResource(businessProfileService.findById(id));
+    }
+    @PostMapping("{accountId}")
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
     public BusinessProfileDto createFavorite(@PathVariable("accountId") Long accountId,@RequestBody CreateBusinessProfileDto resource){
         return mapper.toResource(businessProfileService.create(accountId, mapper.toModel(resource)));

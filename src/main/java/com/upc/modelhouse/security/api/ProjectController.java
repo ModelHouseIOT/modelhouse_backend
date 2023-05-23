@@ -26,17 +26,14 @@ public class ProjectController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
     public List<ProjectDto> getAll(){
         return mapper.listToResource(projectService.getAll());
     }
     @GetMapping("business/{businessId}")
-    @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
     public List<ProjectDto> getAllByBusinessId(@PathVariable("businessId") Long id){
         return mapper.listToResource(projectService.findAllByBusinessProfileId(id));
     }
-    @GetMapping("{id}")
-    @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
+    @GetMapping("profile/{id}")
     public ProjectDto getById(@PathVariable("id") Long id){
         return mapper.toResource(projectService.findById(id));
     }

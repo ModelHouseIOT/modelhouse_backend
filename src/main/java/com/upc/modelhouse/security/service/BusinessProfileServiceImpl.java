@@ -30,7 +30,12 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
 
     @Override
     public BusinessProfile findByAccountId(Long accountId) {
-        return businessProfileRepository.findBusinessProfileById(accountId);
+        return businessProfileRepository.findBusinessProfileByAccount_Id(accountId);
+    }
+
+    @Override
+    public BusinessProfile findById(Long id) {
+        return businessProfileRepository.findBusinessProfileById(id);
     }
 
     @Override

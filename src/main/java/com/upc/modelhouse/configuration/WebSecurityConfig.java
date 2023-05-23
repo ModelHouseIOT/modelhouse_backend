@@ -61,7 +61,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
                 .and().cors().and().csrf().disable().authorizeRequests()
-                .antMatchers("/api/v1/auth/**").permitAll()
+                .antMatchers("/api/v1/auth/**",
+                        "/api/v1/business_profile",
+                        "/api/v1/business_profile/profile/**",
+                        "/api/v1/project",
+                        "/api/v1/project/profile/**",
+                        "/api/v1/project/business/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();
