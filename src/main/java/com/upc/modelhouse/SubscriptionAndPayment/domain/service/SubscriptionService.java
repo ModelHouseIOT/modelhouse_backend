@@ -1,5 +1,6 @@
 package com.upc.modelhouse.SubscriptionAndPayment.domain.service;
 
+import com.upc.modelhouse.SubscriptionAndPayment.domain.model.entity.Plan;
 import com.upc.modelhouse.SubscriptionAndPayment.domain.model.entity.Subscription;
 import org.springframework.http.ResponseEntity;
 
