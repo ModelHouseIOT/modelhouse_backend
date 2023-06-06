@@ -32,15 +32,17 @@ public class RequestController {
     public List<RequestDto> getAll(){
         return mapper.listToResource(requestService.getAll());
     }
-    @GetMapping("business/{businessId}")
+    @GetMapping("business/{businessId}/status/{status}")
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
-    public List<RequestDto> getAllByBusinessId(@PathVariable("businessId") Long id){
-        return mapper.listToResource(requestService.findAllBusinessProfileId(id));
+    public List<RequestDto> getAllByBusinessIdAndStatus(@PathVariable("businessId") Long id,
+                                               @PathVariable("status") String status){
+        return mapper.listToResource(requestService.findAllBusinessProfileIdAndStatus(id,status));
     }
-    @GetMapping("user/{userId}")
+    @GetMapping("user/{userId}/status/{status}")
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
-    public List<RequestDto> getAllByUserId(@PathVariable("userId") Long id){
-        return mapper.listToResource(requestService.findAllUserProfileId(id));
+    public List<RequestDto> getAllByUserIdAndStatus(@PathVariable("userId") Long id,
+                                           @PathVariable("status") String status){
+        return mapper.listToResource(requestService.findAllUserProfileIdAndStatus(id,status));
     }
     @PostMapping("user/{userId}/business/{businessId}")
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")

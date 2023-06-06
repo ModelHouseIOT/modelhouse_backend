@@ -32,13 +32,13 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public List<Request> findAllBusinessProfileId(Long id) {
-        return requestRepository.findAllByBusinessProfileId(id);
+    public List<Request> findAllBusinessProfileIdAndStatus(Long id, String status) {
+        return requestRepository.findAllByBusinessProfileIdAndStatus(id, status);
     }
 
     @Override
-    public List<Request> findAllUserProfileId(Long id) {
-        return requestRepository.findAllByUserProfileId(id);
+    public List<Request> findAllUserProfileIdAndStatus(Long id, String status) {
+        return requestRepository.findAllByUserProfileIdAndStatus(id, status);
     }
 
     @Override
