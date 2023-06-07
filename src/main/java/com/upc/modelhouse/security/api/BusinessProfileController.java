@@ -31,23 +31,23 @@ public class BusinessProfileController {
     public List<BusinessProfileDto> getAll(){
         return mapper.listToResource(businessProfileService.findAll());
     }
-    @GetMapping("account/{accountId}")
+    @GetMapping("user/{userId}")
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
-    public BusinessProfileDto getUserProfileByAccount(@PathVariable("accountId") Long id){
+    public BusinessProfileDto getUserProfileByuser(@PathVariable("userId") Long id){
         return mapper.toResource(businessProfileService.findByAccountId(id));
     }
-    @GetMapping("profile/{accountId}")
-    public BusinessProfileDto getUserProfileById(@PathVariable("accountId") Long id){
+    @GetMapping("profile/{userId}")
+    public BusinessProfileDto getUserProfileById(@PathVariable("userId") Long id){
         return mapper.toResource(businessProfileService.findById(id));
     }
-    @PostMapping("{accountId}")
+    @PostMapping("{userId}")
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
-    public BusinessProfileDto createFavorite(@PathVariable("accountId") Long accountId,@RequestBody CreateBusinessProfileDto resource){
-        return mapper.toResource(businessProfileService.create(accountId, mapper.toModel(resource)));
+    public BusinessProfileDto createBusinessProfile(@PathVariable("userId") Long userId,@RequestBody CreateBusinessProfileDto resource){
+        return mapper.toResource(businessProfileService.create(userId, mapper.toModel(resource)));
     }
     @PutMapping("{id}")
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
-    public BusinessProfileDto updateUserProfile(@PathVariable("id") Long id, @RequestBody UpdateBusinessProfileDto updateBusinessProfileDto){
+    public BusinessProfileDto updateBusinessProfile(@PathVariable("id") Long id, @RequestBody UpdateBusinessProfileDto updateBusinessProfileDto){
         return mapper.toResource(businessProfileService.update(id, mapper.toModel(updateBusinessProfileDto)));
     }
 }

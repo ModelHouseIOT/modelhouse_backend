@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface BusinessProfileService {
     List<BusinessProfile> findAll();
-    BusinessProfile findByAccountId(Long accountId);
+    BusinessProfile findByAccountId(Long userId);
     BusinessProfile findById(Long id);
-    BusinessProfile create(Long accountId, BusinessProfile businessProfile);
+    BusinessProfile create(Long userId, BusinessProfile businessProfile);
     BusinessProfile update(Long id, BusinessProfile businessProfile);
 }

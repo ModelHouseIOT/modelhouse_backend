@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 @With
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthCredentialsResource {
+public class UserCredentialsResource {
     @NotNull
     @NotBlank
     @Email

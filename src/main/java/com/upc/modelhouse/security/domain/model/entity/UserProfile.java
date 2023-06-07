@@ -29,6 +29,6 @@ public class UserProfile {
     private Date lastLogin;
 
     @OneToOne
-    @JoinColumn(name = "account_id")
-    private Account account;
+    @JoinColumn(name = "user_id")
+    private User user;
 }

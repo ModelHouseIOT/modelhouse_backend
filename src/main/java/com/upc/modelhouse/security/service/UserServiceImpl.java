@@ -1,6 +1,6 @@
 package com.upc.modelhouse.security.service;
 
-import com.upc.modelhouse.security.domain.model.entity.Account;
+import com.upc.modelhouse.security.domain.model.entity.User;
 import com.upc.modelhouse.security.domain.model.entity.UserDetailsImpl;
 import com.upc.modelhouse.security.domain.persistence.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,16 +17,16 @@ public class UserServiceImpl implements UserDetailsService {
 
     public UserDetails findEmailById(String idString){
         Long id = Long.parseLong(idString);
-        Account account = userRepository.findById(id).orElse(null);
-        if (account == null)
+        User user = userRepository.findById(id).orElse(null);
+        if (user == null)
         {
             return null;
         }
-        return UserDetailsImpl.build(account);
+        return UserDetailsImpl.build(user);
     }
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Account account = userRepository.findByEmailAddress(email);
-        return UserDetailsImpl.build(account);
+        User user = userRepository.findByEmailAddress(email);
+        return UserDetailsImpl.build(user);
     }
 }

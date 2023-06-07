@@ -1,9 +1,8 @@
 package com.upc.modelhouse.security.service;
 
 import com.upc.modelhouse.security.domain.model.entity.BusinessProfile;
-import com.upc.modelhouse.security.domain.model.entity.UserProfile;
 import com.upc.modelhouse.security.domain.persistence.BusinessProfileRepository;
-import com.upc.modelhouse.security.domain.persistence.UserRepository;
+import com.upc.modelhouse.security.domain.persistence.AccountRepository;
 import com.upc.modelhouse.security.domain.service.BusinessProfileService;
 import com.upc.modelhouse.shared.exception.ResourceNotFoundException;
 import com.upc.modelhouse.shared.exception.ResourceValidationException;
@@ -20,7 +19,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class BusinessProfileServiceImpl implements BusinessProfileService {
     private final BusinessProfileRepository businessProfileRepository;
-    private final UserRepository accountRepository;
+    private final AccountRepository accountRepository;
     private final Validator validator;
     private static final String ENTITY = "BusinessProfile";
     @Override

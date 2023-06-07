@@ -51,7 +51,7 @@ public class RequestServiceImpl implements RequestService {
             UserProfile userProfile = userProfileRepository.findUserProfileById(userId);
             if(userProfile == null)
                 throw new ResourceNotFoundException("The client does not exist");
-            if(businessProfile.getAccount().getId().equals(userProfile.getAccount().getId()))
+            if(businessProfile.getAccount().getUser().getId().equals(userProfile.getUser().getId()))
                 throw new ResourceNotFoundException("The company cannot make a request to it");
             request.setBusinessProfile(businessProfile);
             request.setUserProfile(userProfile);
