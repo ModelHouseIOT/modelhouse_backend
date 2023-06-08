@@ -36,7 +36,7 @@ public class UserController {
     private static final String statusBody = "User already exists";
 
     @PostMapping("/login")
-    @Operation(summary = "Login", tags = {"Auth"})
+    @Operation(summary = "Login", tags = {"User"})
     public ResponseEntity<?> login(@Valid @RequestBody UserCredentialsResource user) {
         ResponseErrorResource errorResource = new ResponseErrorResource();
         errorResource.setMessage(statusBody);
@@ -52,7 +52,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    @Operation(summary = "Register", tags = {"Auth"})
+    @Operation(summary = "Register", tags = {"User"})
     public ResponseEntity<?> register(@Valid @RequestBody UserCredentialsResource credentials) {
 
         ResponseErrorResource errorResource = new ResponseErrorResource();

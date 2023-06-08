@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserProfileService {
     List<UserProfile> findAll();
-    UserProfile findByAccountId(Long accountId);
+    UserProfile findByUserId(Long accountId);
     UserProfile create(Long accountId, UserProfile userProfile);
     UserProfile update(Long id, UserProfile userProfile);
 
