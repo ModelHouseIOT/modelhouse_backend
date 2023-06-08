@@ -9,6 +9,7 @@ import java.util.List;
 public interface SubscriptionService {
     List<Subscription> getAll();
     Subscription findById(Long id);
+    Subscription findByAccountId(Long accountId);
     Subscription create(Long accountId, Subscription subscription);
     Subscription update(Long id, Subscription subscription);
     ResponseEntity<?> delete(Long id);

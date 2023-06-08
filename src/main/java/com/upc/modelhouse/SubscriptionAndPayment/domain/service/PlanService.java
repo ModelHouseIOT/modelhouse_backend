@@ -10,5 +10,4 @@ public interface PlanService {
     Plan findById(Long id);
     Plan create(Plan plan);
     ResponseEntity<?> delete(Long id);
-    Plan update(Long id, Plan plan);
 }
