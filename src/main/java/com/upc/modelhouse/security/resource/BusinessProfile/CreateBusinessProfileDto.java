@@ -23,7 +23,5 @@ public class CreateBusinessProfileDto {
     @NotNull
     @NotBlank
     private String phoneBusiness;
-    @NotNull
-    private Long accountId;
 
 }

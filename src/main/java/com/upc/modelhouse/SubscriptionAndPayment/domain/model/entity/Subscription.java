@@ -1,6 +1,8 @@
 package com.upc.modelhouse.SubscriptionAndPayment.domain.model.entity;
 
+import com.upc.modelhouse.ServiceManagement.domain.model.entity.Proposal;
 import com.upc.modelhouse.security.domain.model.entity.Account;
+import com.upc.modelhouse.security.domain.model.entity.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,11 +23,11 @@ public class Subscription {
     private Boolean activated;
     private Boolean autoRenewal;
 
-    @OneToOne
-    @JoinColumn(name = "plan_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "plan_id", nullable = false)
     private Plan plan;
 
-    @OneToOne
-    @JoinColumn(name = "account_id")
-    private Account account;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 }

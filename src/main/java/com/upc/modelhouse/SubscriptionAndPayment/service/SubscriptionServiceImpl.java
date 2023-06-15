@@ -19,7 +19,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class SubscriptionServiceImpl implements SubscriptionService {
     private final SubscriptionRepository subscriptionRepository;
-    private final UserRepository accountRepository;
+    private final UserRepository userRepository;
     private Validator validator;
 
     private static final String ENTITY = "Subscription";
@@ -34,24 +34,24 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     }
 
     @Override
-    public Subscription findByAccountId(Long accountId) {
-        return subscriptionRepository.findByAccountId(accountId);
+    public Subscription findByAccountId(Long userId) {
+        return subscriptionRepository.findByUserId(userId);
     }
 
     @Override
-    public Subscription create(Long accountId, Subscription subscription) {
+    public Subscription create(Long userId, Subscription subscription) {
         Set<ConstraintViolation<Subscription>> violations = validator.validate(subscription);
         if(!violations.isEmpty()) {
             throw new ResourceValidationException(ENTITY, violations);
         }
-        Subscription subscriptionExist = subscriptionRepository.findByAccountId(accountId);
+        Subscription subscriptionExist = subscriptionRepository.findByUserId(userId);
         if(subscriptionExist != null) {
-            throw new ResourceNotFoundException("This account is already subscribed");
+            throw new ResourceNotFoundException("This user is already subscribed");
         }
-        return accountRepository.findById(accountId).map(account -> {
-            subscription.setAccount(account);
+        return userRepository.findById(userId).map(user -> {
+            subscription.setUser(user);
             return subscriptionRepository.save(subscription);
-        }).orElseThrow(() -> new ResourceNotFoundException("Subscription", accountId));
+        }).orElseThrow(() -> new ResourceNotFoundException("User", userId));
     }
 
     @Override
