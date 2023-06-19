@@ -1,7 +1,12 @@
 package com.upc.modelhouse.security.api;
 
+import com.upc.modelhouse.security.domain.model.entity.Account;
+import com.upc.modelhouse.security.domain.model.entity.User;
 import com.upc.modelhouse.security.domain.persistence.UserRepository;
+import com.upc.modelhouse.security.domain.service.AccountService;
 import com.upc.modelhouse.security.domain.service.UserService;
+import com.upc.modelhouse.security.mapping.AccountMapper;
+import com.upc.modelhouse.security.resource.Account.CreateAccountDto;
 import com.upc.modelhouse.security.resource.UserCredentialsResource;
 import com.upc.modelhouse.security.resource.ResponseErrorResource;
 import com.upc.modelhouse.security.resource.UserResource;
@@ -26,6 +31,8 @@ import javax.validation.Valid;
 public class UserController {
 
     private final UserService authService;
+    private final AccountService accountService;
+    private final AccountMapper mapper;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -61,7 +68,13 @@ public class UserController {
         if(userRepository.findByEmailAddress(credentials.getEmailAddress()) != null) {
             return ResponseEntity.badRequest().body(errorResource);
         }
-
-        return ResponseEntity.ok(authService.register(credentials));
+        User user = authService.register(credentials);
+        CreateAccountDto account = new CreateAccountDto();
+        account.setIsActive(true);
+        if(user!=null){
+            accountService.create(user.getId(), mapper.toModel(account));
+            return ResponseEntity.ok(user);
+        }
+        return ResponseEntity.ok("Registration failed, please try again");
     }
 }
