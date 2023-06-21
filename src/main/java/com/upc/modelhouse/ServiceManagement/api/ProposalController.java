@@ -1,14 +1,18 @@
 package com.upc.modelhouse.ServiceManagement.api;
 
+import com.upc.modelhouse.ServiceManagement.domain.model.entity.Proposal;
 import com.upc.modelhouse.ServiceManagement.domain.service.ProposalService;
 import com.upc.modelhouse.ServiceManagement.mapping.ProposalMapper;
 import com.upc.modelhouse.ServiceManagement.resource.Proposal.CreateProposalDto;
 import com.upc.modelhouse.ServiceManagement.resource.Proposal.ProposalDto;
 import com.upc.modelhouse.ServiceManagement.resource.Proposal.UpdateProposalDto;
+import com.upc.modelhouse.security.domain.model.entity.Project;
+import com.upc.modelhouse.security.domain.service.ProjectService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,10 +23,12 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class ProposalController {
     private final ProposalService proposalService;
+    private final ProjectService projectService;
     private final ProposalMapper mapper;
 
-    public ProposalController(ProposalService proposalService, ProposalMapper mapper) {
+    public ProposalController(ProposalService proposalService, ProjectService projectService, ProposalMapper mapper) {
         this.proposalService = proposalService;
+        this.projectService = projectService;
         this.mapper = mapper;
     }
     @GetMapping("/proposal")
@@ -42,7 +48,15 @@ public class ProposalController {
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
     public ProposalDto createProject(@PathVariable("requestId") Long requestId,
                                     @RequestBody CreateProposalDto createProposalDto){
-        return mapper.toResource(proposalService.create(requestId, mapper.toModel(createProposalDto)));
+        Project resource = new Project();
+        Proposal proposal = proposalService.create(requestId, mapper.toModel(createProposalDto));
+        if(proposal != null){
+            Project project = projectService.createProject(proposal.getRequest().getBusinessProfile().getId(), resource, proposal);
+            if(project != null){
+                return mapper.toResource(proposal);
+            }
+        }
+        return null;
     }
     @PutMapping("/proposal/{id}")
     @Operation(tags = {"Proposal"})

@@ -1,4 +1,6 @@
 package com.upc.modelhouse.ServiceManagement.domain.model.entity;
+import com.upc.modelhouse.security.domain.model.entity.BusinessProfile;
+import com.upc.modelhouse.security.domain.model.entity.Project;
 import lombok.*;
 
 import javax.persistence.*;
@@ -27,4 +29,7 @@ public class Proposal {
     @OneToOne
     @JoinColumn(name = "request_id")
     private Request request;
+
+    @OneToOne(mappedBy = "proposal", cascade = CascadeType.ALL)
+    private Project project;
 }

@@ -1,5 +1,6 @@
 package com.upc.modelhouse.ServiceManagement.domain.model.entity;
 
+import com.upc.modelhouse.security.domain.model.entity.Project;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,6 +25,6 @@ public class ProjectActivity {
     private Float completionPercent;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "proposal_id", nullable = false)
-    private Proposal proposal;
+    @JoinColumn(name = "project_id", nullable = false)
+    private Project project;
 }
