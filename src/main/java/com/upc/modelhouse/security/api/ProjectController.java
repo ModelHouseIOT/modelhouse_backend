@@ -5,6 +5,7 @@ import com.upc.modelhouse.security.mapping.ProjectMapper;
 import com.upc.modelhouse.security.resource.Project.CreateProjectDto;
 import com.upc.modelhouse.security.resource.Project.ProjectDto;
 import com.upc.modelhouse.security.resource.Project.UpdateProjectDto;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,7 +16,7 @@ import java.util.List;
 @SecurityRequirement(name = "acme")
 @RestController
 @CrossOrigin
-@RequestMapping("/api/v1/project")
+@RequestMapping("/api/v1")
 public class ProjectController {
     private final ProjectService projectService;
     private final ProjectMapper mapper;
@@ -25,32 +26,35 @@ public class ProjectController {
         this.mapper = mapper;
     }
 
-    @GetMapping
-    @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
+    @GetMapping("/project")
+    @Operation(tags = {"Project"})
     public List<ProjectDto> getAll(){
         return mapper.listToResource(projectService.getAll());
     }
-    @GetMapping("business/{businessId}")
-    @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
+    @GetMapping("/business_profile/{businessId}/project")
+    @Operation(tags = {"Project"})
     public List<ProjectDto> getAllByBusinessId(@PathVariable("businessId") Long id){
         return mapper.listToResource(projectService.findAllByBusinessProfileId(id));
     }
-    @GetMapping("{id}")
-    @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
+    @GetMapping("/project/{id}/profile")
+    @Operation(tags = {"Project"})
     public ProjectDto getById(@PathVariable("id") Long id){
         return mapper.toResource(projectService.findById(id));
     }
-    @PostMapping("businessProfile/{businessId}")
+    @PostMapping("/business_profile/{businessId}/project")
+    @Operation(tags = {"Project"})
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
     public ProjectDto createProject(@PathVariable("businessId") Long businessId, @RequestBody CreateProjectDto createProjectDto){
         return mapper.toResource(projectService.createProject(businessId, mapper.toModel(createProjectDto)));
     }
-    @PutMapping("{id}")
+    @PutMapping("/project/{id}")
+    @Operation(tags = {"Project"})
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
     public ProjectDto updateProject(@PathVariable("id") Long id, @RequestBody UpdateProjectDto updateBusinessProfileDto){
         return mapper.toResource(projectService.updateProject(id, mapper.toModel(updateBusinessProfileDto)));
     }
-    @DeleteMapping("{id}")
+    @DeleteMapping("/project/{id}")
+    @Operation(tags = {"Project"})
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
     public ResponseEntity<?> deleteProject(@PathVariable("id") Long id){
         return  projectService.deleteProject(id);

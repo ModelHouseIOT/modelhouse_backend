@@ -1,5 +1,6 @@
 package com.upc.modelhouse.security.service;
 
+import com.upc.modelhouse.ServiceManagement.domain.model.entity.Proposal;
 import com.upc.modelhouse.security.domain.model.entity.Project;
 import com.upc.modelhouse.security.domain.persistence.BusinessProfileRepository;
 import com.upc.modelhouse.security.domain.persistence.ProjectRepository;
@@ -40,17 +41,29 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project createProject(Long businessId,Project project) {
+    public Project createProject(Long businessId, Project project, Proposal proposal) {
         Set<ConstraintViolation<Project>> violations = validator.validate(project);
         if(!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
 
         return businessProfileRepository.findById(businessId).map(businessProfile -> {
             project.setBusinessProfile(businessProfile);
+            project.setProposal(proposal);
             return projectRepository.save(project);
         }).orElseThrow(() -> new ResourceNotFoundException("BusinessProfile", businessId));
     }
+    @Override
+    public Project createProject(Long businessId, Project project) {
+        Set<ConstraintViolation<Project>> violations = validator.validate(project);
+        if(!violations.isEmpty())
+            throw new ResourceValidationException(ENTITY, violations);
 
+        return businessProfileRepository.findById(businessId).map(businessProfile -> {
+            project.setBusinessProfile(businessProfile);
+            project.setProposal(null);
+            return projectRepository.save(project);
+        }).orElseThrow(() -> new ResourceNotFoundException("BusinessProfile", businessId));
+    }
     @Override
     public Project updateProject(Long id, Project project) {
         Set<ConstraintViolation<Project>> violations = validator.validate(project);

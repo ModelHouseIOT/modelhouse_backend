@@ -1,6 +1,5 @@
 package com.upc.modelhouse.ServiceManagement.domain.model.entity;
 
-import com.upc.modelhouse.security.domain.model.entity.Account;
 import com.upc.modelhouse.security.domain.model.entity.BusinessProfile;
 import com.upc.modelhouse.security.domain.model.entity.UserProfile;
 import lombok.*;

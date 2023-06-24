@@ -21,5 +21,5 @@ public class UserProfileDto {
     private String phoneNumber;
     private Date registrationDate;
     private Date lastLogin;
-    private UserResource account;
+    private UserResource user;
 }

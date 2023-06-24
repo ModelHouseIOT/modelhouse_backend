@@ -1,6 +1,6 @@
 package com.upc.modelhouse.security.mapping;
 
-import com.upc.modelhouse.security.domain.model.entity.Account;
+import com.upc.modelhouse.security.domain.model.entity.User;
 import com.upc.modelhouse.security.resource.CreateUserResource;
 import com.upc.modelhouse.security.resource.UserResource;
 import com.upc.modelhouse.shared.mapping.EnhancedModelMapper;
@@ -31,11 +31,11 @@ public class UserMapper implements Serializable {
         return new PageImpl<>(modelMapper.mapList(modelList, UserResource.class), pageable, modelList.size());
     }
 
-    public Account toModel(CreateUserResource resource) {
-        return modelMapper.map(resource, Account.class);
+    public User toModel(CreateUserResource resource) {
+        return modelMapper.map(resource, User.class);
     }
 
-    public UserResource toResource(Account account) {
+    public UserResource toResource(User account) {
         return modelMapper.map(account, UserResource.class);
     }
 

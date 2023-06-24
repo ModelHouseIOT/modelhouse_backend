@@ -4,6 +4,7 @@ import com.upc.modelhouse.ServiceManagement.domain.model.entity.ProjectActivity;
 import com.upc.modelhouse.ServiceManagement.domain.persistence.ProjectActivityRepository;
 import com.upc.modelhouse.ServiceManagement.domain.persistence.ProposalRepository;
 import com.upc.modelhouse.ServiceManagement.domain.service.ProjectActivityService;
+import com.upc.modelhouse.security.domain.persistence.ProjectRepository;
 import com.upc.modelhouse.shared.exception.ResourceNotFoundException;
 import com.upc.modelhouse.shared.exception.ResourceValidationException;
 import lombok.AllArgsConstructor;
@@ -18,25 +19,25 @@ import java.util.Set;
 @Service
 @AllArgsConstructor
 public class ProjectActivityServiceImpl implements ProjectActivityService {
-    private final ProposalRepository proposalRepository;
+    private final ProjectRepository projectRepository;
     private final ProjectActivityRepository projectActivityRepository;
     private final Validator validator;
     private static final String ENTITY = "ProjectActivity";
 
     @Override
     public List<ProjectActivity> findAllProposalId(Long id) {
-        return projectActivityRepository.findAllByProposalId(id);
+        return projectActivityRepository.findAllByProjectId(id);
     }
 
     @Override
-    public ProjectActivity create(Long proposalId, ProjectActivity projectActivity) {
+    public ProjectActivity create(Long projectId, ProjectActivity projectActivity) {
         Set<ConstraintViolation<ProjectActivity>> violations = validator.validate(projectActivity);
         if(!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
-        return proposalRepository.findById(proposalId).map(proposal -> {
-            projectActivity.setProposal(proposal);
+        return projectRepository.findById(projectId).map(project -> {
+            projectActivity.setProject(project);
             return projectActivityRepository.save(projectActivity);
-        }).orElseThrow(() -> new ResourceNotFoundException("Proposal", proposalId));
+        }).orElseThrow(() -> new ResourceNotFoundException("Proposal", projectId));
     }
 
     @Override
@@ -60,4 +61,5 @@ public class ProjectActivityServiceImpl implements ProjectActivityService {
                 .orElseThrow(()-> new ResourceNotFoundException(ENTITY , id));
 
     }
+
 }

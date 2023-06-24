@@ -6,6 +6,7 @@ import com.upc.modelhouse.ServiceManagement.domain.model.entity.Request;
 import com.upc.modelhouse.ServiceManagement.domain.persistence.ProjectResourceRepository;
 import com.upc.modelhouse.ServiceManagement.domain.persistence.ProposalRepository;
 import com.upc.modelhouse.ServiceManagement.domain.service.ProjectResourceService;
+import com.upc.modelhouse.security.domain.persistence.ProjectRepository;
 import com.upc.modelhouse.shared.exception.ResourceNotFoundException;
 import com.upc.modelhouse.shared.exception.ResourceValidationException;
 import lombok.AllArgsConstructor;
@@ -21,25 +22,25 @@ import java.util.Set;
 @Service
 @AllArgsConstructor
 public class ProjectResourceServiceImpl implements ProjectResourceService {
-    private final ProposalRepository proposalRepository;
+    private final ProjectRepository projectRepository;
     private final ProjectResourceRepository projectResourceRepository;
     private final Validator validator;
     private static final String ENTITY = "Request";
 
     @Override
     public List<ProjectResource> findAllProposalId(Long id) {
-        return projectResourceRepository.findAllByProposalId(id);
+        return projectResourceRepository.findAllByProjectId(id);
     }
 
     @Override
-    public ProjectResource create(Long proposalId, ProjectResource projectResource) {
+    public ProjectResource create(Long projectId, ProjectResource projectResource) {
         Set<ConstraintViolation<ProjectResource>> violations = validator.validate(projectResource);
         if(!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
-        return proposalRepository.findById(proposalId).map(proposal -> {
-            projectResource.setProposal(proposal);
+        return projectRepository.findById(projectId).map(project -> {
+            projectResource.setProject(project);
             return projectResourceRepository.save(projectResource);
-        }).orElseThrow(() -> new ResourceNotFoundException("Proposal", proposalId));
+        }).orElseThrow(() -> new ResourceNotFoundException("Proposal", projectId));
     }
 
     @Override

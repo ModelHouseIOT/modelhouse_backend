@@ -1,11 +1,13 @@
 package com.upc.modelhouse.security.api;
 
 import com.upc.modelhouse.security.domain.model.entity.Account;
+import com.upc.modelhouse.security.domain.model.entity.User;
 import com.upc.modelhouse.security.domain.persistence.UserRepository;
-import com.upc.modelhouse.security.domain.service.AuthService;
-import com.upc.modelhouse.security.mapping.UserMapper;
-import com.upc.modelhouse.security.resource.AuthCredentialsResource;
-import com.upc.modelhouse.security.resource.JwtResponse;
+import com.upc.modelhouse.security.domain.service.AccountService;
+import com.upc.modelhouse.security.domain.service.UserService;
+import com.upc.modelhouse.security.mapping.AccountMapper;
+import com.upc.modelhouse.security.resource.Account.CreateAccountDto;
+import com.upc.modelhouse.security.resource.UserCredentialsResource;
 import com.upc.modelhouse.security.resource.ResponseErrorResource;
 import com.upc.modelhouse.security.resource.UserResource;
 import com.upc.modelhouse.security.util.JwtUtil;
@@ -25,10 +27,12 @@ import javax.validation.Valid;
 @RestController
 @AllArgsConstructor
 @CrossOrigin
-@RequestMapping("/api/v1/auth")
-public class AuthController {
+@RequestMapping("/api/v1/user")
+public class UserController {
 
-    private final AuthService authService;
+    private final UserService authService;
+    private final AccountService accountService;
+    private final AccountMapper mapper;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -39,12 +43,12 @@ public class AuthController {
     private static final String statusBody = "User already exists";
 
     @PostMapping("/login")
-    @Operation(summary = "Login", tags = {"Auth"})
-    public ResponseEntity<?> login(@Valid @RequestBody AuthCredentialsResource account) {
+    @Operation(summary = "Login", tags = {"User"})
+    public ResponseEntity<?> login(@Valid @RequestBody UserCredentialsResource user) {
         ResponseErrorResource errorResource = new ResponseErrorResource();
         errorResource.setMessage(statusBody);
-        UserResource response = authService.login(account);
-        Authentication authentication = manager.authenticate(new UsernamePasswordAuthenticationToken(account.getEmailAddress(), account.getPassword()));
+        UserResource response = authService.login(user);
+        Authentication authentication = manager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmailAddress(), user.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtil.generateJwtToken(authentication);
         if(response == null) {
@@ -55,8 +59,8 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    @Operation(summary = "Register", tags = {"Auth"})
-    public ResponseEntity<?> register(@Valid @RequestBody AuthCredentialsResource credentials) {
+    @Operation(summary = "Register", tags = {"User"})
+    public ResponseEntity<?> register(@Valid @RequestBody UserCredentialsResource credentials) {
 
         ResponseErrorResource errorResource = new ResponseErrorResource();
         errorResource.setMessage(statusBody);
@@ -64,7 +68,13 @@ public class AuthController {
         if(userRepository.findByEmailAddress(credentials.getEmailAddress()) != null) {
             return ResponseEntity.badRequest().body(errorResource);
         }
-
-        return ResponseEntity.ok(authService.register(credentials));
+        User user = authService.register(credentials);
+        CreateAccountDto account = new CreateAccountDto();
+        account.setIsActive(true);
+        if(user!=null){
+            accountService.create(user.getId(), mapper.toModel(account));
+            return ResponseEntity.ok(user);
+        }
+        return ResponseEntity.ok("Registration failed, please try again");
     }
 }

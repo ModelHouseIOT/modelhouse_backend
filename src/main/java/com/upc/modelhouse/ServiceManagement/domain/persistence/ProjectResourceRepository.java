@@ -10,5 +10,5 @@ import java.util.List;
 public interface ProjectResourceRepository extends JpaRepository<ProjectResource, Long> {
     ProjectResource findProjectResourceById(Long id);
     List<ProjectResource> findAll();
-    List<ProjectResource> findAllByProposalId(Long id);
+    List<ProjectResource> findAllByProjectId(Long id);
 }

@@ -1,6 +1,5 @@
 package com.upc.modelhouse.security.service;
 
-import com.upc.modelhouse.security.domain.model.entity.Account;
 import com.upc.modelhouse.security.domain.model.entity.UserProfile;
 import com.upc.modelhouse.security.domain.persistence.UserProfileRepository;
 import com.upc.modelhouse.security.domain.persistence.UserRepository;
@@ -21,7 +20,7 @@ import java.util.Set;
 public class UserProfileServiceImpl implements UserProfileService {
 
     private final UserProfileRepository userProfileRepository;
-    private final UserRepository accountRepository;
+    private final UserRepository userRepository;
     private final Validator validator;
     private static final String ENTITY = "UserProfile";
     @Override
@@ -30,22 +29,22 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
 
     @Override
-    public UserProfile findByAccountId(Long accountId) {
-        return userProfileRepository.findUserProfileByAccount_Id(accountId);
+    public UserProfile findByUserId(Long userId) {
+        return userProfileRepository.findUserProfileByUser_Id(userId);
     }
 
     @Override
-    public UserProfile create(Long accountId, UserProfile userProfile) {
+    public UserProfile create(Long userId, UserProfile userProfile) {
         Set<ConstraintViolation<UserProfile>> violations = validator.validate(userProfile);
         if(!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
-        UserProfile userProfileExist = userProfileRepository.findUserProfileByAccount_Id(accountId);
+        UserProfile userProfileExist = userProfileRepository.findUserProfileByUser_Id(userId);
         if(userProfileExist != null)
             throw new ResourceNotFoundException("User Profile is exist");
-        return accountRepository.findById(accountId).map(account -> {
-            userProfile.setAccount(account);
+        return userRepository.findById(userId).map(user -> {
+            userProfile.setUser(user);
             return userProfileRepository.save(userProfile);
-        }).orElseThrow(() -> new ResourceNotFoundException("Request", accountId));
+        }).orElseThrow(() -> new ResourceNotFoundException("Request", userId));
 
     }
 

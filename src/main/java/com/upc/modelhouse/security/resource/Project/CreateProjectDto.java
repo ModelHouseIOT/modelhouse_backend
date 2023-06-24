@@ -19,6 +19,4 @@ public class CreateProjectDto {
     @NotNull
     @NotBlank
     private String image;
-    //@NotNull
-    //private Long businessProfileId;
 }

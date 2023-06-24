@@ -32,19 +32,17 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public List<Request> findAllBusinessProfileId(Long id) {
-        return requestRepository.findAllByBusinessProfileId(id);
+    public List<Request> findAllBusinessProfileIdAndStatus(Long id, String status) {
+        return requestRepository.findAllByBusinessProfileIdAndStatus(id, status);
     }
 
     @Override
-    public List<Request> findAllUserProfileId(Long id) {
-        return requestRepository.findAllByUserProfileId(id);
+    public List<Request> findAllUserProfileIdAndStatus(Long id, String status) {
+        return requestRepository.findAllByUserProfileIdAndStatus(id, status);
     }
 
     @Override
     public Request create(Long userId, Long businessId, Request request) {
-        if(userId.equals(businessId))
-            throw new ResourceNotFoundException("The company cannot make a request to it");
         Set<ConstraintViolation<Request>> violations = validator.validate(request);
         if(!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
@@ -53,7 +51,7 @@ public class RequestServiceImpl implements RequestService {
             UserProfile userProfile = userProfileRepository.findUserProfileById(userId);
             if(userProfile == null)
                 throw new ResourceNotFoundException("The client does not exist");
-            if(businessProfile.getAccount().getId().equals(userProfile.getAccount().getId()))
+            if(businessProfile.getAccount().getUser().getId().equals(userProfile.getUser().getId()))
                 throw new ResourceNotFoundException("The company cannot make a request to it");
             request.setBusinessProfile(businessProfile);
             request.setUserProfile(userProfile);
