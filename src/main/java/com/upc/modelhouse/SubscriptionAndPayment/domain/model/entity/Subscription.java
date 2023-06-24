@@ -1,7 +1,5 @@
 package com.upc.modelhouse.SubscriptionAndPayment.domain.model.entity;
 
-import com.upc.modelhouse.ServiceManagement.domain.model.entity.Proposal;
-import com.upc.modelhouse.security.domain.model.entity.Account;
 import com.upc.modelhouse.security.domain.model.entity.User;
 import lombok.*;
 

@@ -21,5 +21,4 @@ public class Plan {
     private String description;
     private Double price;
     private Long maxUsers;
-
 }
