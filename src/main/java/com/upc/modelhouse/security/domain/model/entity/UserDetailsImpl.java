@@ -30,14 +30,14 @@ public class UserDetailsImpl implements UserDetails {
         this.authorities = authorities;
     }
 
-    public static UserDetailsImpl build(User user) {
+    public static UserDetailsImpl build(User account) {
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("USER"));
 
         return new UserDetailsImpl(
-                user.getId(),
-                user.getEmail(),
-                user.getPassword(),
+                account.getId(),
+                account.getEmailAddress(),
+                account.getPassword(),
                 authorities);
     }
 

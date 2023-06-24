@@ -1,18 +1,14 @@
 package com.upc.modelhouse.security.domain.model.entity;
 
 import com.upc.modelhouse.shared.domain.model.AuditModel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.Email;
 
 @Getter
 @Setter
+@With
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -20,7 +16,17 @@ public class User extends AuditModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String email;
+    @Email
+    @Column(name = "email_address")
+    private String emailAddress;
+    @Column(name = "is_active")
+    private Boolean isActive;
+    private String role;
     private String password;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Account account;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private UserProfile userProfile;
 
 }
