@@ -30,6 +30,8 @@ public class PlansController {
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
     public List<PlanDto> getAll() { return mapper.listToResource(planService.getAll()); }
+    @GetMapping("/{id}")
+    public PlanDto getById(@PathVariable("id") Long id) { return mapper.toResource(planService.findById(id)); }
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
     public PlanDto createPlan(CreatePlanDto dto) { return mapper.toResource(planService.create(mapper.toModel(dto))); }
