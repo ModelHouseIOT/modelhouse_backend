@@ -16,7 +16,7 @@ import java.util.List;
 @Tag(name = "Subscriptions")
 @RestController
 @CrossOrigin
-@RequestMapping("/api/v1/subscriptions")
+@RequestMapping("/api/v1")
 public class SubscriptionsController {
     private final SubscriptionService subscriptionService;
     private final SubscriptionMapper mapper;
@@ -26,15 +26,15 @@ public class SubscriptionsController {
         this.mapper = mapper;
     }
 
-    @GetMapping
+    @GetMapping("/subscriptions")
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
     public List<SubscriptionDto> getAll() { return mapper.listToResource(subscriptionService.getAll()); }
 
-    @PostMapping
+    @PostMapping("/account/{accountId}/plans/{planId}/subscriptions")
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
-    public SubscriptionDto createSubscription(Long userId, CreateSubscriptionDto dto) { return mapper.toResource(subscriptionService.create(userId, mapper.toModel(dto))); }
+    public SubscriptionDto createSubscription(Long accountId, Long planId, @RequestBody CreateSubscriptionDto createSubscriptionDto) { return mapper.toResource(subscriptionService.create(accountId, planId, mapper.toModel(createSubscriptionDto))); }
 
-    @DeleteMapping("{subscriptionId}")
+    @DeleteMapping("/subscriptions/{subscriptionId}")
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
     public ResponseEntity<?> deleteSubscription(Long subscriptionId) { return subscriptionService.delete(subscriptionId); }
 }

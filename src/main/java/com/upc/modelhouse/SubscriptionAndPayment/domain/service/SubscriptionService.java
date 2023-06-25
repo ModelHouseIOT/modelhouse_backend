@@ -10,7 +10,7 @@ public interface SubscriptionService {
     List<Subscription> getAll();
     Subscription findById(Long id);
     Subscription findByAccountId(Long accountId);
-    Subscription create(Long userId, Subscription subscription);
-    Subscription update(Long userId, Subscription subscription);
+    Subscription create(Long accountId, Long planId, Subscription subscription);
+    Subscription update(Long id, Subscription subscription);
     ResponseEntity<?> delete(Long id);
 }
