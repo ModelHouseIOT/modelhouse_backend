@@ -1,7 +1,7 @@
 package com.upc.modelhouse.SubscriptionAndPayment.resource.Subscription;
 
 import com.upc.modelhouse.SubscriptionAndPayment.resource.Plan.PlanDto;
-import com.upc.modelhouse.security.resource.UserResource;
+import com.upc.modelhouse.security.resource.Account.AccountDto;
 import lombok.*;
 
 import java.util.Date;
@@ -18,5 +18,5 @@ public class SubscriptionDto {
     private Boolean activated;
     private Boolean autoRenewal;
     private PlanDto plan;
-    private UserResource account;
+    private AccountDto account;
 }

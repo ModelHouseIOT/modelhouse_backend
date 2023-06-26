@@ -19,7 +19,6 @@ import java.util.Set;
 @AllArgsConstructor
 public class PlanServiceImpl implements PlanService {
     private final PlanRepository planRepository;
-    private final SubscriptionRepository subscriptionRepository;
     private final Validator validator;
     private static final String ENTITY = "Plan";
 
@@ -30,7 +29,7 @@ public class PlanServiceImpl implements PlanService {
 
     @Override
     public Plan findById(Long id) {
-        return planRepository.getPlanById(id);
+        return planRepository.findPlanById(id);
     }
 
     @Override
@@ -39,7 +38,7 @@ public class PlanServiceImpl implements PlanService {
         if(!violations.isEmpty()) {
             throw new ResourceValidationException(ENTITY, violations);
         }
-        Plan planExist = planRepository.getPlanById(plan.getId());
+        Plan planExist = planRepository.findPlanById(plan.getId());
         if(planExist != null) {
             throw new ResourceNotFoundException("This plan already exist");
         }
