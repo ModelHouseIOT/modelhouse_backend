@@ -67,7 +67,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/v1/business_profile/{id}",
                         "/api/v1/project",
                         "/api/v1/business_profile/{businessId}/project",
-                        "/api/v1/project/{id}/profile").permitAll()
+                        "/api/v1/project/{id}/profile",
+                        "/api/v1/order/create-checkout-session",
+                        "/api/v1/product",
+                        "/api/v1/add",
+                        "/api/v1/update/{productID}",
+                        "/api/v1/addCart",
+                        "/api/v1/carts",
+                        "/api/v1/cart",
+                        "/api/v1/carts/{cartId}").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();
