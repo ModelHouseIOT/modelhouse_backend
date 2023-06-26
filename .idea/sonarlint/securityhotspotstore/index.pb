@@ -28,8 +28,6 @@ Zsrc/main/java/com/upc/modelhouse/ServiceManagement/service/ProjectActivityServi
 ™
 isrc/main/java/com/upc/modelhouse/ServiceManagement/resource/ProjectActivity/UpdateProjectActivityDto.java,7\1\71e9cc87da3197fcef3567698691ce61d9ba6f61
 |
-Lsrc/main/java/com/upc/modelhouse/security/api/BusinessProfileController.java,b\c\bcf22b5af1a2cd0424120846b745b28cc458b79e
-|
 Lsrc/main/java/com/upc/modelhouse/security/mapping/BusinessProfileMapper.java,9\a\9a92208c03727b0be3936106da5926a43dc43468
 z
 Jsrc/main/java/com/upc/modelhouse/security/domain/model/entity/Project.java,a\0\a0bb0619735b80af47ba392fb18a312fa1ff4a4a
@@ -39,7 +37,5 @@ Psrc/main/java/com/upc/modelhouse/security/resource/Project/UpdateProjectDto.jav
 Rsrc/main/java/com/upc/modelhouse/security/domain/model/entity/BusinessProfile.java,c\0\c034e09b387621d7ae6514cce42568c580e1ce49
 ~
 Nsrc/main/java/com/upc/modelhouse/security/domain/model/entity/UserProfile.java,9\1\914b0cd5f1053e85ca6916c75eb042822781dafb
-q
-Asrc/main/java/com/upc/modelhouse/security/api/UserController.java,6\6\66c1984eb98e25cdec274bbc4fcad2b31bc3a683
 v
 Fsrc/main/java/com/upc/modelhouse/security/service/UserServiceImpl.java,c\3\c3829693466f085256c417790a2d6e2ad6f34840

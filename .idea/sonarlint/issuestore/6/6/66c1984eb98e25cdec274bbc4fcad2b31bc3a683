@@ -1,8 +1,0 @@
-
-t	java:S115+"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ÊŸĞıÿÿÿÿ
-A
-java:S1452/"&Remove usage of generic wildcard type.(¥¨ë¤ÿÿÿÿÿ
-A
-java:S1452?"&Remove usage of generic wildcard type.(ä’µëøÿÿÿÿ
-j
-java:S1128"TRemove this unused import 'com.upc.modelhouse.security.domain.model.entity.Account'.(Íû¬³
