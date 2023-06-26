@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@SecurityRequirement(name = "acme")
 @RestController
 @CrossOrigin
 @RequestMapping("/api/v1")
