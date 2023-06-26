@@ -63,10 +63,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().cors().and().csrf().disable().authorizeRequests()
                 .antMatchers("/api/v1/user/**",
                         "/api/v1/business_profile",
+                        "/api/v1/account/{accountId}/business_profile",
                         "/api/v1/business_profile/{id}",
                         "/api/v1/project",
-                        "/api/v1/project/{id}/profile",
-                        "/api/v1/business_profile/{businessId}/project").permitAll()
+                        "/api/v1/business_profile/{businessId}/project",
+                        "/api/v1/project/{id}/profile").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();
