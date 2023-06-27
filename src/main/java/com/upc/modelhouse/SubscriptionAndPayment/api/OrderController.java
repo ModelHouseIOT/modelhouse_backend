@@ -2,7 +2,7 @@ package com.upc.modelhouse.SubscriptionAndPayment.api;
 
 import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
-import com.upc.modelhouse.SubscriptionAndPayment.resource.Checkout.CheckoutItemDto;
+import com.upc.modelhouse.SubscriptionAndPayment.resource.Checkout.CheckoutPlanDto;
 import com.upc.modelhouse.SubscriptionAndPayment.resource.Checkout.StripeResponse;
 import com.upc.modelhouse.SubscriptionAndPayment.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +24,9 @@ public class OrderController {
 
     /* Stripe Session Checkout API */
     @PostMapping("/create-checkout-session")
-    public ResponseEntity<StripeResponse> checkoutList(@RequestBody List<CheckoutItemDto> checkoutItemDtoList)
+    public ResponseEntity<StripeResponse> checkoutList(@RequestBody List<CheckoutPlanDto> checkoutPlanDtoList)
             throws StripeException {
-        Session session = orderService.createSession(checkoutItemDtoList);
+        Session session = orderService.createSession(checkoutPlanDtoList);
         StripeResponse stripeResponse = new StripeResponse(session.getId());
         return new ResponseEntity<>(stripeResponse, HttpStatus.OK);
     }
