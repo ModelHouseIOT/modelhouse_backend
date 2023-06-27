@@ -26,26 +26,26 @@ public class ProjectResourceController {
         this.mapper = mapper;
     }
     @GetMapping("/proposal/{proposalId}/project_resource")
-    @Operation(tags = {"ProjectResource"})
+    @Operation(tags = {"project-resource"})
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
     public List<ProjectResourceDto> getAllByProposalId(@PathVariable("proposalId") Long proposalId){
         return mapper.listToResource(projectResourceService.findAllProposalId(proposalId));
     }
     @PostMapping("/proposal/{proposalId}/project_resource")
-    @Operation(tags = {"ProjectResource"})
+    @Operation(tags = {"project-resource"})
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
     public ProjectResourceDto create(@PathVariable("proposalId") Long proposalId,
                                     @RequestBody CreateProjectResourceDto createProjectResourceDto){
         return mapper.toResource(projectResourceService.create(proposalId, mapper.toModel(createProjectResourceDto)));
     }
     @PutMapping("/project_resource/{id}")
-    @Operation(tags = {"ProjectResource"})
+    @Operation(tags = {"project-resource"})
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
     public ProjectResourceDto update(@PathVariable("id") Long id, @RequestBody UpdateProjectResourceDto updateProjectResourceDto){
         return mapper.toResource(projectResourceService.update(id, mapper.toModel(updateProjectResourceDto)));
     }
     @DeleteMapping("/project_resource/{id}")
-    @Operation(tags = {"ProjectResource"})
+    @Operation(tags = {"project-resource"})
     @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
     public ResponseEntity<?> delete(@PathVariable("id") Long id){
         return  projectResourceService.delete(id);
