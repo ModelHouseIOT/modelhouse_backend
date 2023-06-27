@@ -22,8 +22,8 @@ public class Cart {
     private Date createdDate;
 
     @ManyToOne
-    @JoinColumn(name = "product_id", referencedColumnName = "id")
-    private Product product;
+    @JoinColumn(name = "plan_id", referencedColumnName = "id")
+    private Plan plan;
 
     @JsonIgnore
     @OneToOne(targetEntity = Account.class, fetch = FetchType.EAGER)
@@ -31,9 +31,9 @@ public class Cart {
     private Account account;
 
     private int quantity;
-    public Cart(Product product, int quantity, Account account){
+    public Cart(Plan plan, int quantity, Account account){
         this.account = account;
-        this.product = product;
+        this.plan = plan;
         this.quantity = quantity;
         this.createdDate = new Date();
     }
