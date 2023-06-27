@@ -4,7 +4,7 @@ import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
-import com.upc.modelhouse.SubscriptionAndPayment.resource.Checkout.CheckoutItemDto;
+import com.upc.modelhouse.SubscriptionAndPayment.resource.Checkout.CheckoutPlanDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ public class OrderService {
     private String baseURL;
     @Value("${STRIPE_SECRET_KEY}")
     private String apiKey;
-    public Session createSession(List<CheckoutItemDto> checkoutItemDtoList) throws StripeException {
+    public Session createSession(List<CheckoutPlanDto> checkoutPlanDtoList) throws StripeException {
         /* Success and Failure */
         String successURL = baseURL+ "payment/success";
         String failureURL = baseURL+ "payment/failure";
@@ -26,10 +26,9 @@ public class OrderService {
 
         List<SessionCreateParams.LineItem> sessionItemList = new ArrayList<>();
 
-        for(CheckoutItemDto checkoutItemDto: checkoutItemDtoList){
-            sessionItemList.add(createSessionLineItem(checkoutItemDto));
+        for(CheckoutPlanDto checkoutPlanDto: checkoutPlanDtoList){
+            sessionItemList.add(createSessionLineItem(checkoutPlanDto));
         }
-
         SessionCreateParams params = SessionCreateParams.builder()
                 .addPaymentMethodType(SessionCreateParams.PaymentMethodType.CARD)
                 .setMode(SessionCreateParams.Mode.PAYMENT)
@@ -40,18 +39,18 @@ public class OrderService {
         return Session.create(params);
     }
 
-    private SessionCreateParams.LineItem createSessionLineItem(CheckoutItemDto checkoutItemDto) {
+    private SessionCreateParams.LineItem createSessionLineItem(CheckoutPlanDto checkoutPlanDto) {
         return SessionCreateParams.LineItem.builder()
-                .setPriceData(createPriceData(checkoutItemDto))
-                .setQuantity(Long.parseLong(String.valueOf(checkoutItemDto.getQuantity())))
+                .setPriceData(createPriceData(checkoutPlanDto))
+                .setQuantity(Long.parseLong(String.valueOf(1))) /* Just 1 Plan per buying */
                 .build();
     }
 
-    private SessionCreateParams.LineItem.PriceData createPriceData(CheckoutItemDto checkoutItemDto) {
+    private SessionCreateParams.LineItem.PriceData createPriceData(CheckoutPlanDto checkoutPlanDto) {
         return SessionCreateParams.LineItem.PriceData.builder()
                 .setCurrency("usd")
-                .setUnitAmount((long) (checkoutItemDto.getPrice()*100))
+                .setUnitAmount((long) (checkoutPlanDto.getPrice()*100))
                 .setProductData(SessionCreateParams.LineItem.PriceData.ProductData.builder()
-                        .setName(checkoutItemDto.getProductName()).build()).build();
+                        .setName(checkoutPlanDto.getName()).build()).build();
     }
 }
