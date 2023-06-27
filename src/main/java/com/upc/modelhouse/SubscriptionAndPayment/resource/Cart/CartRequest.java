@@ -1,7 +1,7 @@
 package com.upc.modelhouse.SubscriptionAndPayment.resource.Cart;
 
 public class CartRequest {
-    private int productId;
+    private Long planId;
     private Long accountId;
 
     public Long getAccountId(){
@@ -11,10 +11,10 @@ public class CartRequest {
         this.accountId = accountId;
     }
 
-    public int getProductId(){
-        return productId;
+    public Long getPlanId(){
+        return planId;
     }
-    public void setProductId(int productId){
-        this.productId = productId;
+    public void setPlanId(Long planId){
+        this.planId = planId;
     }
 }

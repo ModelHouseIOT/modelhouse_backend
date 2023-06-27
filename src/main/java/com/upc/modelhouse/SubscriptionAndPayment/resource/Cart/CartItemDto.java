@@ -1,6 +1,6 @@
 package com.upc.modelhouse.SubscriptionAndPayment.resource.Cart;
 
-import com.upc.modelhouse.SubscriptionAndPayment.domain.model.entity.Product;
+import com.upc.modelhouse.SubscriptionAndPayment.domain.model.entity.Plan;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,18 +10,18 @@ import javax.validation.constraints.NotNull;
 @Setter
 public class CartItemDto {
     private @NotNull Integer quantity;
-    private @NotNull Product product;
+    private @NotNull Plan plan;
     public CartItemDto() {
     }
-    public CartItemDto(Product product, int quantity) {
-        this.product = product;
+    public CartItemDto(Plan plan, int quantity) {
+        this.plan = plan;
         this.quantity = quantity;
     }
     @Override
     public String toString() {
         return "CartDto{" +
                 ", quantity=" + quantity +
-                ", productName=" + product.getName() +
+                ", productName=" + plan.getName() +
                 '}';
     }
 }

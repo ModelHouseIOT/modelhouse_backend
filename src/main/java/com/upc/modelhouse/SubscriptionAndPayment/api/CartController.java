@@ -1,9 +1,9 @@
 package com.upc.modelhouse.SubscriptionAndPayment.api;
 
 import com.upc.modelhouse.SubscriptionAndPayment.domain.model.entity.Cart;
-import com.upc.modelhouse.SubscriptionAndPayment.domain.model.entity.Product;
+import com.upc.modelhouse.SubscriptionAndPayment.domain.model.entity.Plan;
 import com.upc.modelhouse.SubscriptionAndPayment.domain.persistence.CartRepository;
-import com.upc.modelhouse.SubscriptionAndPayment.domain.persistence.ProductRepository;
+import com.upc.modelhouse.SubscriptionAndPayment.domain.persistence.PlanRepository;
 import com.upc.modelhouse.SubscriptionAndPayment.resource.Cart.CartDto;
 import com.upc.modelhouse.SubscriptionAndPayment.resource.Cart.CartItemDto;
 import com.upc.modelhouse.SubscriptionAndPayment.resource.Cart.CartRequest;
@@ -34,7 +34,7 @@ public class CartController {
     private CartRepository cartRepository;
 
     @Autowired
-    private ProductRepository productRepository;
+    private PlanRepository planRepository;
 
     @GetMapping("/carts/{cartId}")
     public ResponseEntity<Cart> getCart(@PathVariable Integer cartId){
@@ -61,12 +61,12 @@ public class CartController {
 
         // Calculate the total cost and populate the cart items list
         for (Cart cart : carts) {
-            Product product = cart.getProduct();
+            Plan plan = cart.getPlan();
             int quantity = cart.getQuantity();
-            double itemTotalCost = product.getPrice() * quantity;
+            double itemTotalCost = plan.getPrice() * quantity;
             totalCost += itemTotalCost;
 
-            CartItemDto cartItem = new CartItemDto(product, quantity);
+            CartItemDto cartItem = new CartItemDto(plan, quantity);
             cartItems.add(cartItem);
         }
         return new CartDto(cartItems, totalCost);
@@ -77,9 +77,9 @@ public class CartController {
     public ResponseEntity<Cart> createCart(@RequestBody CartRequest cartRequest)  {
 
         Account account = accountRepository.findAccountById(cartRequest.getAccountId());
-        Product product = productRepository.findById(cartRequest.getProductId())
-                .orElseThrow(()->new NotFoundException("Product not found"));
-        Cart cart = new Cart(product,1,account);
+        Plan plan = planRepository.findById(cartRequest.getPlanId())
+                .orElseThrow(()->new NotFoundException("Plan not found"));
+        Cart cart = new Cart(plan,1,account);
 
         Cart savedCart = cartRepository.save(cart);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedCart);
